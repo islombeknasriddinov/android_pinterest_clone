@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ParentHomeFragment">
+
+    <fragment
+        android:id="@+id/ParentHomeFragment"
+        android:name="com.example.pinterest_clone.fragment.ParentHomeFragment"
+        tools:layout="@layout/fragment_parent_home"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.pinterest_clone.fragment.SearchFragment"
+        tools:layout="@layout/fragment_search"
+        android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/chatFragment"
+        tools:layout="@layout/fragment_chat"
+        android:name="com.example.pinterest_clone.fragment.ChatFragment"
+        android:label="ChatFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        tools:layout="@layout/fragment_profile"
+        android:name="com.example.pinterest_clone.fragment.ProfileFragment"
+        android:label="ProfileFragment" />
+</navigation>

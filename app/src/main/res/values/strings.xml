@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Pinterest_Clone</string>
+    <string name="str_home">home</string>
+    <string name="str_profile">profile</string>
+    <string name="str_chat">chat</string>
+    <string name="str_search">search</string>
+</resources>
