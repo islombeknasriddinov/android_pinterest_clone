@@ -3,6 +3,8 @@ package com.example.pinterest_clone.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
@@ -10,7 +12,7 @@ import com.example.pinterest_clone.fragment.HomeFragment
 import com.example.pinterest_clone.model.PhotoHome
 import com.google.android.material.imageview.ShapeableImageView
 
-class HomeAdapter(var context: HomeFragment, var items : ArrayList<PhotoHome> ) : BaseAdapter() {
+class HomeAdapter(var context: Fragment, var items : ArrayList<PhotoHome>, var sendImage: (PhotoHome)->Unit ) : BaseAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,6 +29,11 @@ class HomeAdapter(var context: HomeFragment, var items : ArrayList<PhotoHome> ) 
 
             Glide.with(context).load(item.img).into(img)
             description.text = item.description
+            ViewCompat.setTransitionName(holder.img,""+position)
+
+            img.setOnClickListener {
+                sendImage.invoke(item)
+            }
         }
     }
 
