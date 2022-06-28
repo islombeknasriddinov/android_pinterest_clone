@@ -23,7 +23,6 @@ class DetailFragment : BaseFragment() {
     private var _bn: FragmentDetailBinding? = null
     private val bn get() = _bn!!
 
-    var resultPhoto: String? = null
     lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
