@@ -3,9 +3,13 @@
     <string name="str_home">home</string>
     <string name="str_profile">profile</string>
     <string name="str_chat">chat</string>
-    <string name="str_search">search</string>
+    <string name="str_search">Search</string>
     <string name="str_read_it">Read it</string>
     <string name="str_save">Save</string>
     <string name="str_share_your_feed_back">Share your feedback</string>
     <string name="str_add_a_comment">Add a comment</string>
+    <string name="str_more_like_this">More like this</string>
+    <string name="str_love_this_pin_let_know">Love this Pin? Let $ know!</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_search_for_ideas">Search for ideas</string>
 </resources>
