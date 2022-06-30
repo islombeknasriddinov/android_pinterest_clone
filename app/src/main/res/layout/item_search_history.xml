@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:gravity="center_horizontal"
-    android:padding="10dp">
+    android:padding="15dp">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -18,9 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_weight="1"
         android:singleLine="true"
-        android:text="Design for wepsite"
+        android:text="Design for website"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold" />

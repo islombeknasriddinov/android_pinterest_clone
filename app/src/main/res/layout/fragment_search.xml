@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/white"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:animateLayoutChanges="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -37,6 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:animateLayoutChanges="true"
                         android:src="@drawable/ic_search" />
 
                     <EditText
@@ -45,13 +47,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
                         android:layout_weight="1"
-                        android:inputType="text"
-                        android:singleLine="true"
                         android:background="@drawable/edittext_search_rounded"
                         android:drawableEnd="@drawable/ic_camera"
                         android:hint="@string/str_search_for_ideas"
+                        android:inputType="text"
                         android:padding="7dp"
                         android:paddingStart="5dp"
+                        android:singleLine="true"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -62,27 +64,37 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
+                    android:animateLayoutChanges="true"
                     android:gravity="center"
                     android:text="@string/str_cancel"
                     android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_search_history"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:visibility="gone" />
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_search_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_search_recommendation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp" />
+
+            </FrameLayout>
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_search_recommendation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp" />
+
 
     </LinearLayout>
 
