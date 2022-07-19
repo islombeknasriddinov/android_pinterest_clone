@@ -12,4 +12,8 @@
     <string name="str_love_this_pin_let_know">Love this Pin? Let $ know!</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_search_for_ideas">Search for ideas</string>
+    <string name="str_ideas_for_you">Ideas for you</string>
+    <string name="str_popular_on_pinterest">Popular on Pinterest</string>
+    <string name="str_share_ideas_with_your_friends">Share ideas with your friends</string>
+    <string name="str_new_messages">New messages</string>
 </resources>
