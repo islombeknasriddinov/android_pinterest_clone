@@ -1,15 +1,14 @@
-package com.example.pinterest_clone.fragment
+package com.example.pinterest_clone.fragment.parentSearch.result
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.pinterest_clone.databinding.FragmentChatBinding
-import com.example.pinterest_clone.databinding.FragmentHomeBinding
-import com.example.pinterest_clone.databinding.FragmentProfileBinding
+import com.example.pinterest_clone.databinding.FragmentSearchResultBinding
+import com.example.pinterest_clone.fragment.BaseFragment
 
-class ProfileFragment : BaseFragment() {
-    private var _bn: FragmentProfileBinding? = null
+class SearchResultFragment : BaseFragment() {
+    private var _bn: FragmentSearchResultBinding? = null
     private val bn get() = _bn!!
 
     override fun onCreateView(
@@ -17,7 +16,7 @@ class ProfileFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _bn = FragmentProfileBinding.inflate(inflater, container, false)
+        _bn = FragmentSearchResultBinding.inflate(inflater, container, false)
         return bn.root
     }
 
@@ -34,4 +33,5 @@ class ProfileFragment : BaseFragment() {
     private fun initView() {
 
     }
+
 }

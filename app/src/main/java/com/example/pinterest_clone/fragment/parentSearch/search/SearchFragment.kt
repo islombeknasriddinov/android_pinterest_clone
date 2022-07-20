@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment
+package com.example.pinterest_clone.fragment.parentSearch.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.adapter.PopularAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchBinding
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.manager.PrefsManager
 import com.example.pinterest_clone.model.Popular
 import com.example.pinterest_clone.model.SearchHistory

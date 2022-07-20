@@ -8,17 +8,17 @@
         android:title="@string/str_home" />
 
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/ParentSearchFragment"
         android:icon="@drawable/menu_ic_search"
         android:title="@string/str_search" />
 
     <item
-        android:id="@+id/chatFragment"
+        android:id="@+id/ParentChatFragment"
         android:icon="@drawable/menu_ic_chat"
         android:title="@string/str_chat" />
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/ParentProfileFragment"
         android:icon="@drawable/menu_ic_person"
         android:title="@string/str_profile" />
 </menu>

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterest_clone.databinding.ItemHomeFilterBinding
-import com.example.pinterest_clone.fragment.HomeFragment
+import com.example.pinterest_clone.fragment.parentHome.home.HomeFragment
 import com.example.pinterest_clone.model.Filter
 
 class FilterAdapter(var context: HomeFragment, var items: ArrayList<Filter>): BaseAdapter() {

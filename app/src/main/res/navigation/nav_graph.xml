@@ -7,22 +7,24 @@
 
     <fragment
         android:id="@+id/ParentHomeFragment"
-        android:name="com.example.pinterest_clone.fragment.ParentHomeFragment"
+        android:name="com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment"
         tools:layout="@layout/fragment_parent_home"
         android:label="HomeFragment" />
+
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.pinterest_clone.fragment.SearchFragment"
-        tools:layout="@layout/fragment_search"
+        android:id="@+id/ParentSearchFragment"
+        android:name="com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment"
+        tools:layout="@layout/fragment_parent_search"
         android:label="SearchFragment" />
+
     <fragment
-        android:id="@+id/chatFragment"
-        tools:layout="@layout/fragment_chat"
-        android:name="com.example.pinterest_clone.fragment.ChatFragment"
+        android:id="@+id/ParentChatFragment"
+        tools:layout="@layout/fragment_parent_chat"
+        android:name="com.example.pinterest_clone.fragment.parentChat.ParentChatFragment"
         android:label="ChatFragment" />
     <fragment
-        android:id="@+id/profileFragment"
-        tools:layout="@layout/fragment_profile"
-        android:name="com.example.pinterest_clone.fragment.ProfileFragment"
+        android:id="@+id/ParentProfileFragment"
+        tools:layout="@layout/fragment_parent_profile"
+        android:name="com.example.pinterest_clone.fragment.parentProfile.ParentProfileFragment"
         android:label="ProfileFragment" />
 </navigation>

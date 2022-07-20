@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.pinterest_clone.fragment.HomeFragment"
+        android:name="com.example.pinterest_clone.fragment.parentHome.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -18,9 +18,10 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
     </fragment>
+
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.pinterest_clone.fragment.DetailFragment"
+        android:name="com.example.pinterest_clone.fragment.parentHome.detail.DetailFragment"
         android:label="DetailFragment"
         tools:layout="@layout/fragment_detail">
         <action

@@ -1,36 +1,34 @@
-package com.example.pinterest_clone.fragment
+package com.example.pinterest_clone.fragment.parentHome.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.bumptech.glide.Glide
 import com.example.pinterest_clone.R
+import com.example.pinterest_clone.adapter.FilterAdapter
 import com.example.pinterest_clone.adapter.HomeAdapter
-import com.example.pinterest_clone.databinding.FragmentDetailBinding
+import com.example.pinterest_clone.databinding.FragmentHomeBinding
+import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.model.Filter
 import com.example.pinterest_clone.model.PhotoHome
-import com.google.android.material.imageview.ShapeableImageView
 
-class DetailFragment : BaseFragment() {
-
-    private var _bn: FragmentDetailBinding? = null
+class HomeFragment : BaseFragment() {
+    private var _bn: FragmentHomeBinding? = null
     private val bn get() = _bn!!
 
     lateinit var recyclerView: RecyclerView
+    lateinit var rv_filter: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _bn = FragmentDetailBinding.inflate(inflater, container, false)
+        _bn = FragmentHomeBinding.inflate(inflater, container, false)
         return bn.root
     }
 
@@ -45,18 +43,14 @@ class DetailFragment : BaseFragment() {
     }
 
     private fun initView() {
-        recyclerView = bn.relatedView
+        recyclerView = bn.rvItems
         recyclerView.setLayoutManager(StaggeredGridLayoutManager(2,
             StaggeredGridLayoutManager.VERTICAL))
         refreshAdapter(items())
 
-        bn.ivBack.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        arguments.let {
-            Glide.with(this).load(it?.getSerializable("photo")).into(bn.ivDetailedPhoto)
-        }
+        rv_filter = bn.rvCategory
+        rv_filter.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        refreshStoryAdapter(getAllFilters())
 
     }
 
@@ -116,6 +110,14 @@ class DetailFragment : BaseFragment() {
 
     }
 
+    private fun getAllFilters(): ArrayList<Filter> {
+        val filters: ArrayList<Filter> = ArrayList()
+
+        filters.add(Filter("All"))
+
+        return filters
+    }
+
     private fun refreshAdapter(items: ArrayList<PhotoHome>) {
         val adapter = HomeAdapter(this, items){ photo ->
             sendPhotoToDetailFragment(photo)
@@ -126,8 +128,11 @@ class DetailFragment : BaseFragment() {
     private fun sendPhotoToDetailFragment(photo: PhotoHome){
         val args = Bundle()
         args.putString("photo", photo.img)
-        Log.d("@@@", "sendPhotoToDetailFragment: $args")
-        findNavController().navigate(R.id.action_detailFragment_to_detailFragment, args)
+        findNavController().navigate(R.id.action_homeFragment_to_detailFragment, args)
     }
 
+    private fun refreshStoryAdapter(chats: ArrayList<Filter>) {
+        val adapter = FilterAdapter(this, chats)
+        rv_filter!!.adapter = adapter
+    }
 }

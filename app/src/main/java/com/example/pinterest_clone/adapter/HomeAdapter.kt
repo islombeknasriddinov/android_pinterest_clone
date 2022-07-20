@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
-import com.example.pinterest_clone.fragment.HomeFragment
 import com.example.pinterest_clone.model.PhotoHome
 import com.google.android.material.imageview.ShapeableImageView
 

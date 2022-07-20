@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterest_clone.databinding.ItemSearchHistoryBinding
-import com.example.pinterest_clone.fragment.SearchFragment
 import com.example.pinterest_clone.manager.PrefsManager
 import com.example.pinterest_clone.model.SearchHistory
 
