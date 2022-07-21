@@ -117,7 +117,6 @@ class SearchFragment : BaseFragment() {
 
     }
 
-    @JvmName("getHistory1")
     private fun getHistory(): ArrayList<SearchHistory> {
         val type: Type = object : TypeToken<ArrayList<SearchHistory>>() {}.type
         return prefsManager.getArrayList(PrefsManager.KEY_LIST, type)

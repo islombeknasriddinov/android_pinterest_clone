@@ -6,6 +6,8 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable-v24/border_round_filter.xml" value="0.166" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/bottom_nav_corner_rounded.xml" value="0.1675" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/button_corner_rounded.xml" value="0.166" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/gradient_profile_page.xml" value="0.166" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/ic_add.xml" value="0.166" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/ic_back.xml" value="0.166" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/ic_clear.xml" value="0.142" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/ic_comments.xml" value="0.166" />
@@ -19,21 +21,26 @@
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/menu_ic_person.xml" value="0.166" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/menu_ic_search.xml" value="0.166" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/red_button_corner_rounded.xml" value="0.166" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/drawable/shape_rounded_categories.xml" value="0.166" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/flow_fragment_home.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_chat.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_chat.xml" value="0.16321070234113713" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_detail.xml" value="0.253125" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_helper_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_parent_chat.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_parent_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_parent_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_parent_search.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_profile.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_search.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_search_result.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/fragment_update.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/item_home_filter.xml" value="1.2" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/item_home_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/item_popular_page.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/item_search_history.xml" value="0.25025641025641027" />
+        <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/layout/item_updates_element.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Asus/AndroidStudioProjects/Pinterest_Clone/app/src/main/res/menu/nav_item.xml" value="0.25416666666666665" />
       </map>
     </option>

@@ -9,6 +9,12 @@
         android:id="@+id/searchFragment"
         android:name="com.example.pinterest_clone.fragment.parentSearch.search.SearchFragment"
         tools:layout="@layout/fragment_search"
-        android:label="SearchFragment" />
+        android:label="SearchFragment"/>
+
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.pinterest_clone.fragment.parentSearch.result.SearchResultFragment"
+        tools:layout="@layout/fragment_search_result"
+        android:label="SearchResultFragment"/>
 
 </navigation>

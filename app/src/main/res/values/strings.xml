@@ -16,4 +16,8 @@
     <string name="str_popular_on_pinterest">Popular on Pinterest</string>
     <string name="str_share_ideas_with_your_friends">Share ideas with your friends</string>
     <string name="str_new_messages">New messages</string>
+    <string name="str_messages">Messages</string>
+    <string name="str_updates">Updates</string>
+    <string name="str_followers">followers</string>
+    <string name="str_following">following</string>
 </resources>

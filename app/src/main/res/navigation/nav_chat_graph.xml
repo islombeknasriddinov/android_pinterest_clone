@@ -3,7 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_search_graph"
-    app:startDestination="@id/chatFragment">
+    app:startDestination="@id/helperFragment">
+
+    <fragment
+        android:id="@+id/helperFragment"
+        android:name="com.example.pinterest_clone.fragment.parentChat.helper.HelperFragment"
+        tools:layout="@layout/fragment_helper_page"
+        android:label="HelperFragment"/>
+
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.pinterest_clone.fragment.parentChat.update.UpdateFragment"
+        tools:layout="@layout/fragment_update"
+        android:label="UpdateFragment"/>
 
     <fragment
         android:id="@+id/chatFragment"

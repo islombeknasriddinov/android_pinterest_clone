@@ -7,8 +7,42 @@
 
     <fragment
         android:id="@+id/profileFragment"
-        tools:layout="@layout/fragment_profile"
-        android:name="com.example.pinterest_clone.fragment.parentProfile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:name="com.example.pinterest_clone.fragment.parentProfile.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+    <action
+        android:id="@+id/action_profileFragment_to_detailFragment"
+        app:destination="@id/detailFragment"
+        app:enterAnim="@anim/from_right"
+        app:exitAnim="@anim/to_left"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.pinterest_clone.fragment.parentHome.detail.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
+        <action
+            android:id="@+id/action_detailFragment_to_profileFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+        <action
+            android:id="@+id/action_detailFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"/>
+        <argument
+            android:name="photo"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

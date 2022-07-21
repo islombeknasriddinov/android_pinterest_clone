@@ -36,4 +36,14 @@
         <item name="android:textStyle">bold</item>
         <item name="textAllCaps">false</item>
     </style>
+
+    <style name="left_rounded">
+        <item name="cornerSizeTopLeft">20dp</item>
+        <item name="cornerSizeBottomLeft">20dp</item>
+    </style>
+
+    <style name="right_rounded">
+        <item name="cornerSizeTopRight">20dp</item>
+        <item name="cornerSizeBottomRight">20dp</item>
+    </style>
 </resources>
