@@ -3,7 +3,9 @@ package com.example.pinterest_clone.activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 open class BaseActivity : AppCompatActivity() {
     fun setTransparentStatusBarColor(
         context: Context,

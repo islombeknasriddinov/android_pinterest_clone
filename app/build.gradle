@@ -3,6 +3,9 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
+    id "org.jetbrains.kotlin.kapt"
+    id "dagger.hilt.android.plugin"
+
 }
 
 android {
@@ -37,7 +40,14 @@ android {
     }
 }
 
+
 dependencies {
+    def retrofit_version = "2.9.0"
+    def room_version = "2.4.2"
+    def hilt_version = "2.42"
+    def ktx_version = "1.5.0"
+    def coroutines_version = "1.6.1"
+    def glide_version = "4.13.2"
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -59,4 +69,25 @@ dependencies {
 
     //Gson for object to json
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+// Room
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+//by viewModel
+    implementation "androidx.activity:activity-ktx:$ktx_version"
+    implementation "androidx.fragment:fragment-ktx:$ktx_version"
+
+// Dagger hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+// Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 }

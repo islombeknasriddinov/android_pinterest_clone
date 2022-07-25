@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.fragment.BaseFragment
 

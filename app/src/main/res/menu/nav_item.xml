@@ -15,6 +15,7 @@
     <item
         android:id="@+id/ParentChatFragment"
         android:icon="@drawable/menu_ic_chat"
+        app:tint="@color/white"
         android:title="@string/str_chat" />
 
     <item

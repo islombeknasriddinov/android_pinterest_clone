@@ -45,16 +45,16 @@ class ProfileFragment : BaseFragment() {
 
 
 
-    private fun refreshAdapter(items: ArrayList<PhotoHome>) {
-        val adapter = HomeAdapter(this, items){ photo ->
-            sendPhotoToDetailFragment(photo)
-        }
-        recyclerView.adapter = adapter
-    }
-
-    private fun sendPhotoToDetailFragment(photo: PhotoHome){
-        val args = Bundle()
-        args.putString("photo", photo.img)
-        findNavController().navigate(R.id.action_profileFragment_to_detailFragment, args)
-    }
+//    private fun refreshAdapter(items: ArrayList<PhotoHome>) {
+//        val adapter = HomeAdapter(this, items){ photo ->
+//            sendPhotoToDetailFragment(photo)
+//        }
+//        recyclerView.adapter = adapter
+//    }
+//
+//    private fun sendPhotoToDetailFragment(photo: PhotoHome){
+//        val args = Bundle()
+//        args.putString("photo", photo.img)
+//        findNavController().navigate(R.id.action_profileFragment_to_detailFragment, args)
+//    }
 }

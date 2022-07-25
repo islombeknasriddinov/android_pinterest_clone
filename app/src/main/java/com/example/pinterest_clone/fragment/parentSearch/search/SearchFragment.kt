@@ -156,7 +156,7 @@ class SearchFragment : BaseFragment() {
         popular_adapter = PopularAdapter(requireContext(), items){ text ->
             bn.etSearch.setText(text.title)
             editLastCursor()
-            showKeyboard(bn.etSearch)
+            //showKeyboard(bn.etSearch)
         }
         rv_search_recommendation!!.adapter = popular_adapter
     }
@@ -186,7 +186,7 @@ class SearchFragment : BaseFragment() {
         popular_adapter = PopularAdapter(requireContext(), items){ text ->
             bn.etSearch.setText(text.title)
             editLastCursor()
-            showKeyboard(bn.etSearch)
+           // showKeyboard(bn.etSearch)
         }
         rv_search_ideas!!.adapter = popular_adapter
     }
@@ -210,7 +210,7 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun isFocusableFalse() {
-        hideKeyboard()
+        //hideKeyboard()
         bn.etSearch.text.clear()
         bn.ivSearch.animate()
         val show_ivSearch = TranslateAnimation(-100F, 0F, 0F, 0F)

@@ -1,6 +1,7 @@
 package com.example.pinterest_clone.activity
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.navigation.findNavController

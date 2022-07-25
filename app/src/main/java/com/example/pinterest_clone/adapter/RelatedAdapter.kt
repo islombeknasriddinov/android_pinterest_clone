@@ -17,11 +17,12 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
+import com.example.pinterest_clone.model.RelatedPhotos
 import com.example.pinterest_clone.utils.Logger
 import com.google.android.material.imageview.ShapeableImageView
 
-class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImage: (PhotoHomePage)->Unit) : BaseAdapter() {
-
+class RelatedAdapter(var context: Fragment, var sendImage: (PhotoHomePage)->Unit) : BaseAdapter() {
+    var photoList = ArrayList<PhotoHomePage>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -64,7 +65,14 @@ class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImag
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addPhotos(photoList: PhotoList) {
+    fun addPhotos(photoList: ArrayList<PhotoHomePage>) {
+        this.photoList.addAll(photoList)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addNewPhotos(photoList: ArrayList<PhotoHomePage>) {
+        this.photoList.clear()
         this.photoList.addAll(photoList)
         notifyDataSetChanged()
     }
