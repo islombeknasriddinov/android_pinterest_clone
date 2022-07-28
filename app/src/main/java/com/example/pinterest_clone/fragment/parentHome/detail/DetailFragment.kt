@@ -1,6 +1,5 @@
 package com.example.pinterest_clone.fragment.parentHome.detail
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,22 +10,21 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.R
-import com.example.pinterest_clone.adapter.RelatedAdapter
+import com.example.pinterest_clone.adapter.HomeAdapter
 import com.example.pinterest_clone.databinding.FragmentDetailBinding
 import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.RelatedPhotos
+import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.DetailViewModel
 
 class DetailFragment : BaseFragment() {
     private val TAG = DetailFragment::class.java.simpleName
-    val viewModel: DetailViewModel by viewModels()
-    lateinit var adapter: RelatedAdapter
-
     private var _bn: FragmentDetailBinding? = null
     private val bn get() = _bn!!
 
+    val viewModel: DetailViewModel by viewModels()
+    lateinit var adapter: HomeAdapter
     lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
@@ -58,10 +56,10 @@ class DetailFragment : BaseFragment() {
                 StaggeredGridLayoutManager.VERTICAL
             )
         )
-        refreshAdapter()
+        refreshAdapter(PhotoList())
 
         bn.ivBack.setOnClickListener {
-            findNavController().navigateUp()
+            navigateUp()
         }
 
         arguments.let {
@@ -85,7 +83,7 @@ class DetailFragment : BaseFragment() {
 
         viewModel.relatedPhotoFromApi.observe(viewLifecycleOwner) {
 
-            adapter.addPhotos(it)
+            adapter.addPhotosFromExplore(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -102,8 +100,8 @@ class DetailFragment : BaseFragment() {
         }
     }
 
-    private fun refreshAdapter() {
-        adapter = RelatedAdapter(this) { relatedPhoto ->
+    private fun refreshAdapter(items: PhotoList) {
+        adapter = HomeAdapter(this, items) { relatedPhoto ->
             sendPhotoToDetailFragment(relatedPhoto)
         }
         recyclerView.adapter = adapter

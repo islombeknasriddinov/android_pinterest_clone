@@ -8,9 +8,11 @@ import android.view.animation.TranslateAnimation
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView.OnEditorActionListener
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PopularAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchBinding
@@ -26,6 +28,7 @@ import kotlin.collections.ArrayList
 class SearchFragment : BaseFragment() {
     private var _bn: FragmentSearchBinding? = null
     private val bn get() = _bn!!
+
 
     lateinit var rv_search_history: RecyclerView
     lateinit var rv_search_recommendation: RecyclerView
@@ -86,18 +89,23 @@ class SearchFragment : BaseFragment() {
     }
 
     private fun search() {
-        var et_search = bn.etSearch
-        var tv_cancel = bn.tvCancel
+        val et_search = bn.etSearch
+        val tv_cancel = bn.tvCancel
+        val iv_search = bn.ivSearch
+        val ll_search = bn.llSearch
+        val rv_searchHistory = bn.rvSearchHistory
+
         tv_cancel.setOnClickListener {
             et_search.clearFocus()
-            isFocusableFalse()
+            et_search.text.clear()
+            isFocusableFalse(iv_search, tv_cancel, ll_search, rv_searchHistory)
         }
 
         et_search.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                isFocusableTrue()
+                isFocusableTrue(iv_search, tv_cancel, ll_search, rv_searchHistory)
             } else {
-                isFocusableFalse()
+                isFocusableFalse(iv_search, tv_cancel, ll_search, rv_searchHistory)
             }
         }
 
@@ -106,7 +114,7 @@ class SearchFragment : BaseFragment() {
                 if (et_search.text.isNotEmpty()) {
                     val history = SearchHistory(et_search.text.toString())
                     adapter.addSearchHistory(history)
-                    isFocusableFalse()
+                    sendTextToResultSearchFragment(et_search.text.toString())
                 }
                 et_search.text.clear()
 
@@ -117,6 +125,12 @@ class SearchFragment : BaseFragment() {
 
     }
 
+    private fun sendTextToResultSearchFragment(text: String) {
+        var args = Bundle()
+        args.putString("text", text)
+        findNavController().navigate(R.id.action_searchFragment_to_searchResultFragment, args)
+    }
+
     private fun getHistory(): ArrayList<SearchHistory> {
         val type: Type = object : TypeToken<ArrayList<SearchHistory>>() {}.type
         return prefsManager.getArrayList(PrefsManager.KEY_LIST, type)
@@ -125,7 +139,7 @@ class SearchFragment : BaseFragment() {
     private fun refreshSearchHistoryAdapter(items: ArrayList<SearchHistory>) {
         adapter = SearchHistoryAdapter(requireContext(), items) { text ->
             bn.etSearch.setText(text.text)
-            editLastCursor()
+            editLastCursor(bn.etSearch)
         }
         rv_search_history!!.adapter = adapter
     }
@@ -155,7 +169,7 @@ class SearchFragment : BaseFragment() {
     private fun refreshSearchPopularAdapter(items: ArrayList<Popular>){
         popular_adapter = PopularAdapter(requireContext(), items){ text ->
             bn.etSearch.setText(text.title)
-            editLastCursor()
+            editLastCursor(bn.etSearch)
             //showKeyboard(bn.etSearch)
         }
         rv_search_recommendation!!.adapter = popular_adapter
@@ -185,55 +199,9 @@ class SearchFragment : BaseFragment() {
     private fun refreshSearchIdeasAdapter(items: ArrayList<Popular>){
         popular_adapter = PopularAdapter(requireContext(), items){ text ->
             bn.etSearch.setText(text.title)
-            editLastCursor()
-           // showKeyboard(bn.etSearch)
+            editLastCursor(bn.etSearch)
+            showKeyboard(bn.etSearch)
         }
         rv_search_ideas!!.adapter = popular_adapter
-    }
-
-
-
-    private fun isFocusableTrue() {
-        bn.ivSearch.animate()
-        val hide_ivSearch = TranslateAnimation(0F, -bn.ivSearch.width.toFloat(), 0F, 0F)
-        hide_ivSearch.duration = 300
-        hide_ivSearch.fillAfter = true
-        bn.ivSearch.startAnimation(hide_ivSearch)
-        bn.ivSearch.visibility = View.GONE
-
-        bn.tvCancel.animate()
-        bn.tvCancel.visibility = View.VISIBLE
-        bn.llSearch.layoutParams.height = LinearLayout.LayoutParams.MATCH_PARENT
-
-        bn.rvSearchHistory.visibility = View.VISIBLE
-        bn.rvSearchRecommendation.visibility = View.GONE
-    }
-
-    private fun isFocusableFalse() {
-        //hideKeyboard()
-        bn.etSearch.text.clear()
-        bn.ivSearch.animate()
-        val show_ivSearch = TranslateAnimation(-100F, 0F, 0F, 0F)
-        show_ivSearch.duration = 300
-        show_ivSearch.fillBefore = true
-        bn.ivSearch.visibility = View.VISIBLE
-        bn.ivSearch.startAnimation(show_ivSearch)
-
-        bn.tvCancel.animate()
-        val hide_tvCancel = TranslateAnimation(0F, bn.tvCancel.width.toFloat(), 0F, 0F)
-        hide_tvCancel.duration = 300
-        hide_tvCancel.fillBefore = true
-        bn.tvCancel.startAnimation(hide_tvCancel)
-        bn.tvCancel.visibility = View.GONE
-
-        bn.llSearch.layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
-
-        bn.rvSearchHistory.visibility = View.GONE
-        bn.rvSearchRecommendation.visibility = View.VISIBLE
-
-    }
-
-    private fun editLastCursor() {
-        bn.etSearch.setSelection(bn.etSearch.length())
     }
 }

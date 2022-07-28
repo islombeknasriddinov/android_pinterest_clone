@@ -1,10 +1,10 @@
 package com.example.pinterest_clone.network.service
 
-import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.model.RelatedPhotos
+import com.example.pinterest_clone.model.ResultProfiles
+import com.example.pinterest_clone.model.SearchPhotos
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
@@ -24,5 +24,21 @@ interface PhotoService {
     @Headers("Authorization:$client_id $ACCESS_KEY")
     @GET("photos/{id}/related")
     fun getRelatedPhotos(@Path("id") id: String): Call<RelatedPhotos>
+
+    @Headers("Authorization:$client_id $ACCESS_KEY")
+    @GET("search/photos")
+    fun getSearchPhoto(
+        @Query("page") page: Int,
+        @Query("query") query: String,
+        @Query("per_page") perPage: Int
+    ): Call<SearchPhotos>
+
+    @Headers("Authorization:$client_id $ACCESS_KEY")
+    @GET("search/users")
+    fun getSearchProfile(
+        @Query("page") page: Int,
+        @Query("query") query: String,
+        @Query("per_page") perPage: Int
+    ): Call<ResultProfiles>
 
 }

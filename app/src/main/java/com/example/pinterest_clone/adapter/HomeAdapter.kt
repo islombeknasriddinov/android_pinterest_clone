@@ -64,8 +64,15 @@ class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImag
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun addPhotos(photoList: PhotoList) {
+    fun addPhotosFromHome(photoList: PhotoList) {
         this.photoList.addAll(photoList)
         notifyDataSetChanged()
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addPhotosFromExplore(photoList: ArrayList<PhotoHomePage>) {
+        this.photoList.addAll(photoList)
+        notifyDataSetChanged()
+    }
+
 }

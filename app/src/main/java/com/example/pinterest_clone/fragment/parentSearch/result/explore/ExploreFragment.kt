@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentHome.home
+package com.example.pinterest_clone.fragment.parentSearch.result.explore
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,38 +6,41 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
-import com.example.pinterest_clone.adapter.FilterAdapter
 import com.example.pinterest_clone.adapter.HomeAdapter
-import com.example.pinterest_clone.databinding.FragmentHomeBinding
+import com.example.pinterest_clone.databinding.FragmentExploreBinding
 import com.example.pinterest_clone.fragment.BaseFragment
-import com.example.pinterest_clone.model.Filter
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
-import com.example.pinterest_clone.utils.Logger
-import com.example.pinterest_clone.viewmodel.HomeViewModel
+import com.example.pinterest_clone.viewmodel.ExploreViewModel
 
+class ExploreFragment : BaseFragment() {
+    companion object {
+        fun newInstance(text: String): ExploreFragment {
+            val args = Bundle()
+            args.putString("text", text)
+            val newFragment = ExploreFragment()
+            newFragment.arguments = args
+            return newFragment
+        }
+    }
 
-class HomeFragment : BaseFragment() {
-    private val TAG = HomeFragment::class.java.simpleName
-    val viewModel: HomeViewModel by viewModels()
+    private var _bn: FragmentExploreBinding? = null
+    private val bn get() = _bn!!
+
+    val viewModel: ExploreViewModel by viewModels()
     lateinit var adapter: HomeAdapter
+    lateinit var recyclerView: RecyclerView
 
     var page = 1
     var per_page = 20
 
-    private var _bn: FragmentHomeBinding? = null
-    private val bn get() = _bn!!
-
-    lateinit var recyclerView: RecyclerView
-    lateinit var rv_filter: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.apiPhotoHome(page,per_page)
+        searchPhotosFromApi()
     }
 
     override fun onCreateView(
@@ -45,7 +48,7 @@ class HomeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _bn = FragmentHomeBinding.inflate(inflater, container, false)
+        _bn = FragmentExploreBinding.inflate(inflater, container, false)
         return bn.root
     }
 
@@ -60,7 +63,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun initView() {
-        recyclerView = bn.rvItems
+        initObserver()
+
+        recyclerView = bn.rvExplain
         val st = StaggeredGridLayoutManager(2,
             StaggeredGridLayoutManager.VERTICAL)
         recyclerView.layoutManager = st
@@ -69,16 +74,10 @@ class HomeFragment : BaseFragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)){
-                    viewModel.apiPhotoHome(++page,per_page)
+                    searchPhotosFromApi()
                 }
             }
         })
-
-        rv_filter = bn.rvCategory
-        rv_filter.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        refreshStoryAdapter(getAllFilters())
-
-        initObserver()
     }
 
     private fun initObserver() {
@@ -86,31 +85,22 @@ class HomeFragment : BaseFragment() {
          * Retrofit Related
          */
 
-        viewModel.photoHomeFromApi.observe(viewLifecycleOwner){
-            adapter.addPhotosFromHome(it)
+        viewModel.searchResultFromApi.observe(viewLifecycleOwner){
+            adapter.addPhotosFromExplore(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
+            //Logger.d(TAG, it.toString())
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
-            if (it) {
-                bn.pbLoading.visibility = View.VISIBLE
-            } else {
-                bn.pbLoading.visibility = View.GONE
-            }
+//            Logger.d(TAG, it.toString())
+//            if (it) {
+//                bn.pbLoading.visibility = View.VISIBLE
+//            } else {
+//                bn.pbLoading.visibility = View.GONE
+//            }
         }
-    }
-
-
-    private fun getAllFilters(): ArrayList<Filter> {
-        val filters: ArrayList<Filter> = ArrayList()
-
-        filters.add(Filter("All"))
-
-        return filters
     }
 
     fun refreshAdapter(items: PhotoList){
@@ -120,6 +110,11 @@ class HomeFragment : BaseFragment() {
         recyclerView.adapter = adapter
     }
 
+    private fun searchPhotosFromApi() {
+        val text = arguments?.getString("text")!!
+        viewModel.searchPhotos(page, text, per_page)
+    }
+
     private fun sendPhotoToDetailFragment(position: PhotoHomePage){
         val args = Bundle()
         args.putString("id", position.id)
@@ -127,11 +122,6 @@ class HomeFragment : BaseFragment() {
         args.putString("description", position.description)
         args.putString("alt_description", position.altDescription.toString())
         args.putString("userName", position.user!!.name)
-        findNavController().navigate(R.id.action_homeFragment_to_detailFragment, args)
-    }
-
-    private fun refreshStoryAdapter(chats: ArrayList<Filter>) {
-        val adapter = FilterAdapter(this, chats)
-        rv_filter!!.adapter = adapter
+        findNavController().navigate(R.id.action_exploreFragment_to_detailFragment, args)
     }
 }

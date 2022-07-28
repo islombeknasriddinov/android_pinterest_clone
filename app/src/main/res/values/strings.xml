@@ -18,6 +18,8 @@
     <string name="str_new_messages">New messages</string>
     <string name="str_messages">Messages</string>
     <string name="str_updates">Updates</string>
+    <string name="str_explore">Explore</string>
+    <string name="str_profiles">Profiles</string>
     <string name="str_followers">followers</string>
     <string name="str_following">following</string>
 </resources>

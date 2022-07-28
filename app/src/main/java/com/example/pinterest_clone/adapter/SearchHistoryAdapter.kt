@@ -24,8 +24,8 @@ class SearchHistoryAdapter(var context: Context, var items: ArrayList<SearchHist
         val item = items[position]
 
         if (holder is SearchHistoryViewHolder){
-            var text  = holder.text
-            var delete = holder.delete
+            val text  = holder.text
+            val delete = holder.delete
 
             text.text = item.text
 
@@ -64,6 +64,7 @@ class SearchHistoryAdapter(var context: Context, var items: ArrayList<SearchHist
     }
 
     fun addSearchHistory(note: SearchHistory) {
+        if (items.contains(note)) items.remove(note)
         items.add(note)
         saveNewList(items)
     }

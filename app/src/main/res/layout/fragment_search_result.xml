@@ -6,92 +6,102 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:background="@color/white"
         app:elevation="0dp">
 
         <LinearLayout
+            android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/iv_btn_back"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/ic_back"
-                app:tint="@color/black" />
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/edittext_search_rounded"
-                android:backgroundTint="#ECECEC"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/et_search"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:hint="@string/str_search_for_ideas"
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:textColor="@color/black"
-                    android:textColorHint="#8C8C8C"
-                    android:textSize="17sp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/iv_clear_text"
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/ic_clear"
-                    android:visibility="invisible"
+                    android:id="@+id/iv_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:animateLayoutChanges="true"
+                    android:src="@drawable/ic_back"
                     app:tint="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/edittext_search_rounded"
+                    android:paddingStart="10dp">
+
+                    <EditText
+                        android:id="@+id/et_search"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top"
+                        android:layout_weight="1"
+                        android:background="@drawable/edittext_search_rounded"
+                        android:hint="@string/str_search_for_ideas"
+                        android:imeOptions="actionSearch"
+                        android:padding="7dp"
+                        android:paddingStart="5dp"
+                        android:singleLine="true"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="10dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_clear"
+                        app:tint="@color/black" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:animateLayoutChanges="true"
+                    android:gravity="center"
+                    android:text="@string/str_cancel"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:animateLayoutChanges="true"
-                android:gravity="center"
-                android:text="@string/str_cancel"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:visibility="gone" />
-
         </LinearLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_helper"
+        android:id="@+id/rv_search_history1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:visibility="visible" />
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tl_filter"

@@ -15,4 +15,8 @@ open class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int {
         TODO("Not yet implemented")
     }
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
 }

@@ -33,13 +33,6 @@ class PrefsManager(context: Context) {
         prefsEditor.apply()
     }
 
-    fun <T> deleteInArrayList(key: String?, value: ArrayList<T>?) {
-        val prefsEditor = sharedPreferences.edit()
-        val json: String = Gson().toJson(value)
-        prefsEditor.remove(json)
-        prefsEditor.apply()
-    }
-
     fun <T> getArrayList(key: String?, type: Type): ArrayList<T> {
         val json: String? = sharedPreferences.getString(key, null)
         return if (json != null) Gson().fromJson(json, type)
