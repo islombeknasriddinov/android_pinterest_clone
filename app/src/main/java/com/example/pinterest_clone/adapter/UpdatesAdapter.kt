@@ -10,13 +10,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.databinding.ItemUpdatesElementBinding
 import com.example.pinterest_clone.model.Topic
+import com.google.android.material.imageview.ShapeableImageView
 
-class UpdatesAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UpdatesAdapter(var context: Fragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var topics = ArrayList<Topic>()
 
@@ -36,18 +38,18 @@ class UpdatesAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView.V
         val topic = topics[position]
         if (holder is UpdatesViewHolder) {
             val photos = topic.previewPhotos!!
-//            Glide.with(context).load(photos[0].urls!!.small).placeholder(ColorDrawable(Color.GRAY))
-//                .into(holder.ivPhotoFirst)
-//            Glide.with(context).load(photos[1].urls!!.small).placeholder(ColorDrawable(Color.GRAY))
-//                .into(holder.ivPhotoSecond)
-//            Glide.with(context).load(photos[2].urls!!.small).placeholder(ColorDrawable(Color.GRAY))
-//                .into(holder.ivPhotoThird)
-//            Glide.with(context).load(photos[3].urls!!.small).placeholder(ColorDrawable(Color.GRAY))
-//                .into(holder.ivPhotoFourth)
-//
-//            Glide.with(context).load(topic.owners!![0].profile_image!!.medium)
-//                .placeholder(ColorDrawable(Color.GRAY))
-//                .into(holder.ivProfile)
+            Glide.with(context).load(photos[0].urls!!.thumb).placeholder(ColorDrawable(Color.GRAY))
+                .into(holder.ivPhotoFirst)
+            Glide.with(context).load(photos[1].urls!!.thumb).placeholder(ColorDrawable(Color.GRAY))
+                .into(holder.ivPhotoSecond)
+            Glide.with(context).load(photos[2].urls!!.thumb).placeholder(ColorDrawable(Color.GRAY))
+                .into(holder.ivPhotoThird)
+            Glide.with(context).load(photos[3].urls!!.thumb).placeholder(ColorDrawable(Color.GRAY))
+                .into(holder.ivPhotoFourth)
+
+            Glide.with(context).load(photos[3].urls!!.thumb)
+                .placeholder(ColorDrawable(Color.GRAY))
+                .into(holder.ivProfile)
 
             holder.tvTitle.text = topic.title
 
@@ -74,7 +76,7 @@ class UpdatesAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView.V
         val ivPhotoFourth: ImageView
 
         init {
-            ivProfile = bn.ivProfile
+            ivProfile = bn.ivProfile1
             tvTitle = bn.tvTitle
             tvDescription = bn.tvDescription
             ivPhotoFirst = bn.ivPhotoFirst

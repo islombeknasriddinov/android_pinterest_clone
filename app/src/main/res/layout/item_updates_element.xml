@@ -14,11 +14,11 @@
         android:orientation="horizontal">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_profile"
+            android:id="@+id/iv_profile1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_settings"
+            android:src="@drawable/picture1"
             app:shapeAppearanceOverlay="@style/circle" />
 
         <LinearLayout

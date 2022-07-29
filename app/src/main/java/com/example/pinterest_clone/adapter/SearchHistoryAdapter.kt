@@ -60,7 +60,7 @@ class SearchHistoryAdapter(var context: Context, var items: ArrayList<SearchHist
         items.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, items.size)
-        notifyDataSetChanged()
+        saveNewList(items)
     }
 
     fun addSearchHistory(note: SearchHistory) {

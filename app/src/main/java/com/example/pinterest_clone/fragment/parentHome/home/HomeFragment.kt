@@ -20,7 +20,6 @@ import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.HomeViewModel
 
-
 class HomeFragment : BaseFragment() {
     private val TAG = HomeFragment::class.java.simpleName
     val viewModel: HomeViewModel by viewModels()
@@ -123,7 +122,7 @@ class HomeFragment : BaseFragment() {
     private fun sendPhotoToDetailFragment(position: PhotoHomePage){
         val args = Bundle()
         args.putString("id", position.id)
-        args.putString("photo", position.urls!!.thumb)
+        args.putString("photo", position.urls!!.regular)
         args.putString("description", position.description)
         args.putString("alt_description", position.altDescription.toString())
         args.putString("userName", position.user!!.name)
