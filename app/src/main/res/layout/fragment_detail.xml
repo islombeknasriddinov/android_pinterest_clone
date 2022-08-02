@@ -173,7 +173,7 @@
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_launcher"
+                            android:src="@drawable/picture4"
                             app:shapeAppearanceOverlay="@style/circle" />
 
                         <EditText
@@ -182,6 +182,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
                             android:background="@color/white"
+                            android:focusable="false"
                             android:hint="@string/str_add_a_comment"
                             android:textSize="16sp" />
 
@@ -190,7 +191,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="2dp"
                     android:background="@drawable/linear_layout_rectengle"
                     android:orientation="vertical">
@@ -207,10 +208,35 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/relatedView"
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/linear_layout_rectengle">
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/relatedView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="top"
+                            android:gravity="center_horizontal">
+
+                            <ProgressBar
+                                android:id="@+id/pb_loading"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
 
                 </LinearLayout>
 

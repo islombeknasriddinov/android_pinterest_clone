@@ -1,6 +1,10 @@
 package com.example.pinterest_clone.fragment.parentHome.detail
 
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +19,8 @@ import com.example.pinterest_clone.databinding.FragmentDetailBinding
 import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
+import com.example.pinterest_clone.model.Pin
+import com.example.pinterest_clone.utils.Dialogs
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.DetailViewModel
 
@@ -47,7 +53,7 @@ class DetailFragment : BaseFragment() {
     }
 
     private fun initView() {
-        initObserve()
+        countDownTimer()
 
         recyclerView = bn.relatedView
         recyclerView.setLayoutManager(
@@ -56,6 +62,7 @@ class DetailFragment : BaseFragment() {
                 StaggeredGridLayoutManager.VERTICAL
             )
         )
+
         refreshAdapter(PhotoList())
 
         bn.ivBack.setOnClickListener {
@@ -64,14 +71,24 @@ class DetailFragment : BaseFragment() {
 
         arguments.let {
             val id = it?.getString("id").toString()
-            val photo = it?.getSerializable("photo")
+            val photo = it?.getString("photo")
             val description = it?.getString("description").toString()
             val userName = it?.getString("userName")
+            val color = it?.getString("color")
 
-            Glide.with(this).load(photo).into(bn.ivDetailedPhoto)
+            Glide.with(this).load(photo).placeholder(ColorDrawable(Color.parseColor(color)))
+                .into(bn.ivDetailedPhoto)
             bn.description.text = description
             bn.comment.text = userName
             viewModel.apiRelatedPhoto(id)
+
+            bn.btnSave.setOnClickListener {
+                viewModel.insertPhotoHomeDB(Pin(0, photo!!, description, userName!!))
+            }
+
+            bn.ivMore.setOnClickListener {
+                Dialogs.showBottomSheetDialog(requireContext(), photo!!)
+            }
         }
 
     }
@@ -82,7 +99,6 @@ class DetailFragment : BaseFragment() {
          */
 
         viewModel.relatedPhotoFromApi.observe(viewLifecycleOwner) {
-
             adapter.addPhotosFromExplore(it)
         }
 
@@ -91,13 +107,22 @@ class DetailFragment : BaseFragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-//            Logger.d(TAG, it.toString())
-//            if (it) {
-//                bn.pbLoading.visibility = View.VISIBLE
-//            } else {
-//                bn.pbLoading.visibility = View.GONE
-//            }
+            Logger.d(TAG, it.toString())
+            if (it) {
+                bn.pbLoading.visibility = View.VISIBLE
+            } else {
+                bn.pbLoading.visibility = View.GONE
+            }
         }
+    }
+
+    private fun countDownTimer() {
+        object : CountDownTimer(500, 50) {
+            override fun onTick(p0: Long) {}
+            override fun onFinish() {
+                initObserve()
+            }
+        }.start()
     }
 
     private fun refreshAdapter(items: PhotoList) {
@@ -110,9 +135,8 @@ class DetailFragment : BaseFragment() {
     private fun sendPhotoToDetailFragment(relatedPhoto: PhotoHomePage) {
         val args = Bundle()
         args.putString("id", relatedPhoto.id)
-        args.putString("photo", relatedPhoto.urls!!.thumb)
+        args.putString("photo", relatedPhoto.urls!!.regular)
         args.putString("description", relatedPhoto.description)
-        args.putString("alt_description", relatedPhoto.altDescription.toString())
         args.putString("userName", relatedPhoto.user!!.name)
         findNavController().navigate(R.id.action_detailFragment_to_detailFragment, args)
     }

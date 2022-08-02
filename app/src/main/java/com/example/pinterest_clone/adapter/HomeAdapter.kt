@@ -3,25 +3,20 @@ package com.example.pinterest_clone.adapter
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.pinterest_clone.R
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
-import com.example.pinterest_clone.utils.Logger
+import com.example.pinterest_clone.model.Pin
 import com.google.android.material.imageview.ShapeableImageView
 
 class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImage: (PhotoHomePage)->Unit) : BaseAdapter() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,7 +24,6 @@ class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImag
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         val item = photoList[position]
 
         if (holder is ItemViewHolder){
@@ -75,4 +69,9 @@ class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImag
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun addPhotosFromDB(photoList: ArrayList<Pin>) {
+        photoList.addAll(photoList)
+        notifyDataSetChanged()
+    }
 }

@@ -2,7 +2,9 @@ package com.example.pinterest_clone.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.pinterest_clone.model.PhotoHomePage
+import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.model.RelatedPhotos
 import com.example.pinterest_clone.repository.PhotoHomeRepository
 import com.example.pinterest_clone.utils.Logger
@@ -21,6 +23,7 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val relatedPhotoFromApi = MutableLiveData<ArrayList<PhotoHomePage>>()
+    val photosFromDB = MutableLiveData<PhotoHomePage>()
 
     fun apiRelatedPhoto(id: String){
         isLoading.value = true
@@ -33,7 +36,6 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
                     val photoList: ArrayList<PhotoHomePage> = response.body()!!.results!!
                     relatedPhotoFromApi.postValue(photoList)
                     isLoading.value = false
-                    Logger.d("@@@@", response.body().toString())
                 }
 
                 override fun onFailure(call: Call<RelatedPhotos>, t: Throwable) {
@@ -48,6 +50,17 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
     fun onError(message: String) {
         errorMessage.value = message
         isLoading.value = false
+    }
+
+    /**
+     * Room related
+     */
+
+    fun insertPhotoHomeDB(pin: Pin){
+        viewModelScope.launch {
+            photoHomeRepository.insertPhotosToDB(pin)
+        }
+
     }
 
 }

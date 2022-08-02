@@ -6,6 +6,8 @@ class PhotoList : ArrayList<PhotoHomePage>()
 
 data class PhotoHomePage (
     val id: String? = null,
+    val description: String? = null,
+    val urls: Urls? = null,
     val createdAt: String? = null,
     val updatedAt: String? = null,
     val promotedAt: String? = null,
@@ -13,9 +15,7 @@ data class PhotoHomePage (
     val height: Long? = null,
     val color: String? = null,
     val blurHash: String? = null,
-    val description: String? = null,
     val altDescription: Any? = null,
-    val urls: Urls? = null,
     val links: WelcomeLinks? = null,
     val categories: List<Any?>? = null,
     val likes: Long? = null,
@@ -24,21 +24,21 @@ data class PhotoHomePage (
     val sponsorship: Sponsorship? = null,
     val topicSubmissions: TopicSubmissions? = null,
     val user: User? = null,
-)
+) : Serializable
 
 data class WelcomeLinks (
     val self: String? = null,
     val html: String? = null,
     val download: String? = null,
     val downloadLocation: String? = null,
-)
+) : Serializable
 
 data class Sponsorship (
     val impressionUrls: List<String>? = null,
     val tagline: String? = null,
     val taglineURL: String? = null,
     val sponsor: User? = null,
-)
+) : Serializable
 
 data class User (
     val id: String? = null,
@@ -60,7 +60,7 @@ data class User (
     val acceptedTos: Boolean? = null,
     val forHire: Boolean? = null,
     val social: Social? = null
-)
+) : Serializable
 
 data class UserLinks (
     val self: String? = null,
@@ -70,20 +70,20 @@ data class UserLinks (
     val portfolio: String? = null,
     val following: String? = null,
     val followers: String? = null,
-)
+) : Serializable
 
 data class ProfileImage (
     val small: String? = null,
     val medium: String? = null,
     val large: String? = null,
-)
+) : Serializable
 
 data class Social (
     val instagramUsername: String,
     val portfolioURL: String? = null,
     val twitterUsername: String? = null,
     val paypalEmail: Any? = null
-)
+) : Serializable
 
 class TopicSubmissions()
 
@@ -94,4 +94,4 @@ data class Urls (
     val small: String,
     val thumb: String,
     val smallS3: String
-)
+) : Serializable

@@ -40,6 +40,6 @@
             app:popExitAnim="@anim/to_right"/>
         <argument
             android:name="photo"
-            app:argType="com.example.pinterest_clone.model.PhotoList" />
+            app:argType="com.example.pinterest_clone.model.PhotoHomePage"/>
     </fragment>
 </navigation>

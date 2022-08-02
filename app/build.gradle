@@ -59,6 +59,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Navigation Component dependencies
+    //noinspection GradleDependency
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     // noinspection GradleDependency
     implementation "androidx.navigation:navigation-ui:$nav_version"
@@ -74,19 +75,19 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
-// Room
+    // Room
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
 
-//by viewModel
+    //by viewModel
     implementation "androidx.activity:activity-ktx:$ktx_version"
     implementation "androidx.fragment:fragment-ktx:$ktx_version"
 
-// Dagger hilt
+    // Dagger hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 
-// Coroutines
+    // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"

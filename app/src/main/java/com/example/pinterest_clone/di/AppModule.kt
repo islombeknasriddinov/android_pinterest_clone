@@ -1,5 +1,8 @@
 package com.example.pinterest_clone.di
 
+import android.app.Application
+import com.example.pinterest_clone.db.AppDatabase
+import com.example.pinterest_clone.db.PhotoHomeDao
 import com.example.pinterest_clone.network.Server.IS_TESTER
 import com.example.pinterest_clone.network.Server.SERVER_DEVELOPMENT
 import com.example.pinterest_clone.network.Server.SERVER_PRODUCTION
@@ -40,5 +43,20 @@ class AppModule {
         return retrofitClient().create(PhotoService::class.java)
     }
 
+    /**
+     * Room related
+     */
+
+    @Provides
+    @Singleton
+    fun appDatabase(context: Application): AppDatabase {
+        return AppDatabase.getAppDBInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun dao(appDatabase: AppDatabase): PhotoHomeDao{
+        return appDatabase.getPhotoHomeDao()
+    }
 
 }

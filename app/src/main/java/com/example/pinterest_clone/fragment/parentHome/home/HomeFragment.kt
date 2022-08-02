@@ -124,8 +124,9 @@ class HomeFragment : BaseFragment() {
         args.putString("id", position.id)
         args.putString("photo", position.urls!!.regular)
         args.putString("description", position.description)
-        args.putString("alt_description", position.altDescription.toString())
         args.putString("userName", position.user!!.name)
+        args.putString("color", position.color)
+
         findNavController().navigate(R.id.action_homeFragment_to_detailFragment, args)
     }
 

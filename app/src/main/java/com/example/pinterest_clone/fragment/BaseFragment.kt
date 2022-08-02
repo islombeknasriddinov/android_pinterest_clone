@@ -1,6 +1,7 @@
 package com.example.pinterest_clone.fragment
 
 import android.content.Context
+import android.view.Gravity
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
@@ -36,8 +37,10 @@ open class BaseFragment : Fragment() {
 
 
     //Toast
-    fun toaster(msg: String) {
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+    fun toaster(context : Context, msg: String) {
+        val toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.TOP, 0, 0)
+        toast.show()
     }
 
     fun isFocusableTrue(
