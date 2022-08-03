@@ -2,6 +2,12 @@ package com.example.pinterest_clone.network
 
 object Server {
     val IS_TESTER = true
-    val SERVER_DEVELOPMENT = "https://api.unsplash.com/"
-    val SERVER_PRODUCTION = "https://api.unsplash.com/"
+    init {
+        System.loadLibrary("keys")
+    }
+
+    external fun getDevelopment(): String
+    external fun getProduction(): String
+    external fun getAccessKey(): String
+    external fun getClientId(): String
 }

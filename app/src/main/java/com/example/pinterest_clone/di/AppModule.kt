@@ -4,8 +4,8 @@ import android.app.Application
 import com.example.pinterest_clone.db.AppDatabase
 import com.example.pinterest_clone.db.PhotoHomeDao
 import com.example.pinterest_clone.network.Server.IS_TESTER
-import com.example.pinterest_clone.network.Server.SERVER_DEVELOPMENT
-import com.example.pinterest_clone.network.Server.SERVER_PRODUCTION
+import com.example.pinterest_clone.network.Server.getDevelopment
+import com.example.pinterest_clone.network.Server.getProduction
 import com.example.pinterest_clone.network.service.PhotoService
 import dagger.Module
 import dagger.Provides
@@ -25,8 +25,8 @@ class AppModule {
 
     @Provides
     fun server():String{
-        if (IS_TESTER) return SERVER_DEVELOPMENT
-        return SERVER_PRODUCTION
+        if (IS_TESTER) return getDevelopment()
+        return getProduction()
     }
 
     @Provides
