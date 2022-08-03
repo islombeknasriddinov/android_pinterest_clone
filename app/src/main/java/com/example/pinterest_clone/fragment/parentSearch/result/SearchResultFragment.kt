@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PagerAdapter
@@ -32,6 +34,8 @@ class SearchResultFragment : BaseFragment() {
     private lateinit var vpFilter: ViewPager
     private lateinit var tlFilter: TabLayout
     private lateinit var prefsManager: PrefsManager
+    lateinit var rv_search_history: RecyclerView
+    lateinit var et_search: EditText
     var text: String? = null
 
     override fun onAttach(context: Context) {
@@ -80,15 +84,15 @@ class SearchResultFragment : BaseFragment() {
     }
 
     private fun search() {
-        val et_search = bn.etSearch; et_search.setText(text)
+        et_search = bn.etSearch; et_search.setText(text)
         val tv_cancel = bn.tvCancel
         val iv_back = bn.ivBack
         val ll_search = bn.llSearch
-        val rv_searchHistory = bn.rvSearchHistory1
+        rv_search_history = bn.rvSearchHistory1
 
         tv_cancel.setOnClickListener {
             et_search.clearFocus()
-            isFocusableFalse(iv_back, tv_cancel, ll_search, rv_searchHistory)
+            isFocusableFalse(iv_back, tv_cancel, ll_search, rv_search_history)
         }
 
         iv_back.setOnClickListener {
@@ -97,26 +101,13 @@ class SearchResultFragment : BaseFragment() {
 
         et_search.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                isFocusableTrue(iv_back, tv_cancel, ll_search, rv_searchHistory)
+                isFocusableTrue(iv_back, tv_cancel, ll_search, rv_search_history)
             } else {
-                isFocusableFalse(iv_back, tv_cancel, ll_search, rv_searchHistory)
+                isFocusableFalse(iv_back, tv_cancel, ll_search, rv_search_history)
             }
         }
 
-        et_search.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
-            if (i == EditorInfo.IME_ACTION_SEARCH) {
-                if (et_search.text.isNotEmpty()) {
-                    val history = SearchHistory(et_search.text.toString())
-                    adapter.addSearchHistory(history)
-                    sendTextToResultSearchFragment(et_search.text.toString())
-                }
-                et_search.text.clear()
-
-            }
-            false
-        })
-
-
+        imeActionSearch(et_search)
     }
 
     private fun getHistory(): ArrayList<SearchHistory> {
@@ -126,16 +117,21 @@ class SearchResultFragment : BaseFragment() {
 
     private fun refreshSearchHistoryAdapter(items: ArrayList<SearchHistory>) {
         adapter = SearchHistoryAdapter(requireContext(), items) { text ->
-            bn.etSearch.setText(text.text)
-            editLastCursor(bn.etSearch)
+            if (text.text!!.isNotEmpty()){
+                et_search.setText(text.text)
+                editLastCursor(et_search)
+                sendTextToResultSearchFragment(text.text.toString())
+            }
         }
-        bn.rvSearchHistory1!!.adapter = adapter
+        rv_search_history!!.adapter = adapter
     }
 
     private fun sendTextToResultSearchFragment(text: String) {
-        val args = Bundle()
-        args.putString("text", text)
-        findNavController().navigate(R.id.action_searchResultFragment_self, args)
+        var args = Bundle()
+        if (text.isNotEmpty()){
+            args.putString("text", text)
+            findNavController().navigate(R.id.action_searchResultFragment_self, args)
+        }
     }
 
     private fun setAdapter() {
@@ -149,6 +145,21 @@ class SearchResultFragment : BaseFragment() {
     private fun refreshAdapter() {
         vpFilter.adapter = pagerAdapter
         tlFilter.setupWithViewPager(vpFilter)
+    }
+
+    private fun imeActionSearch(et_search : EditText) {
+        et_search.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
+            if (i == EditorInfo.IME_ACTION_SEARCH) {
+                if (et_search.text.isNotEmpty()) {
+                    val history = SearchHistory(et_search.text.toString())
+                    adapter.addSearchHistory(history)
+                    sendTextToResultSearchFragment(et_search.text.toString())
+                }
+                et_search.text.clear()
+
+            }
+            false
+        })
     }
 
 }

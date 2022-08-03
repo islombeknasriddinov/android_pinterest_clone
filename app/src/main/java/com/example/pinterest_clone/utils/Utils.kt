@@ -19,9 +19,9 @@ class Utils {
 
         }
 
-        val DIR_NAME = "MyPinterest"
+        val DIR_NAME = "Pinterest Clone"
         private fun imageDownloader(context: Context, url: String) {
-            val filename = "filename.jpg"
+            val filename = System.currentTimeMillis().toString() + ".jpeg"
             val downloadUrlOfImage = url
             val direct = File(Environment
                 .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
@@ -29,7 +29,6 @@ class Utils {
 
             if (!direct.exists()) {
                 direct.mkdir()
-                Log.d(DIR_NAME, "dir created for first time")
             }
 
             val downloadUri = Uri.parse(downloadUrlOfImage)

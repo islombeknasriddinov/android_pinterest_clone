@@ -10,10 +10,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterest_clone.adapter.SearchProfilesAdapter
 import com.example.pinterest_clone.databinding.FragmentProfilesBinding
 import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ExploreViewModel
 import com.example.pinterest_clone.viewmodel.ProfilesViewModel
 
 class ProfilesFragment : BaseFragment() {
+    private val TAG = ProfilesFragment::class.java.simpleName
+
     companion object {
         fun newInstance(text: String): ProfilesFragment {
             val args = Bundle()
@@ -91,16 +94,16 @@ class ProfilesFragment : BaseFragment() {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            //Logger.d(TAG, it.toString())
+            Logger.d(TAG, it.toString())
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-//            Logger.d(TAG, it.toString())
-//            if (it) {
-//                bn.pbLoading.visibility = View.VISIBLE
-//            } else {
-//                bn.pbLoading.visibility = View.GONE
-//            }
+            Logger.d(TAG, it.toString())
+            if (it) {
+                bn.pbLoading.visibility = View.VISIBLE
+            } else {
+                bn.pbLoading.visibility = View.GONE
+            }
         }
     }
 

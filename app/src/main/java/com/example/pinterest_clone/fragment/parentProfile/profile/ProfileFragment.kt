@@ -12,21 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.HomeAdapter
+import com.example.pinterest_clone.adapter.ProfileAdapter
 import com.example.pinterest_clone.databinding.FragmentProfileBinding
 import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
+import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.HomeViewModel
 import com.example.pinterest_clone.viewmodel.ProfileViewModel
 
 class ProfileFragment : BaseFragment() {
+    private val TAG = ProfileFragment::class.java.simpleName
+
     private var _bn: FragmentProfileBinding? = null
     private val bn get() = _bn!!
 
     val viewModel: ProfileViewModel by viewModels()
     lateinit var recyclerView: RecyclerView
-    lateinit var adapter: HomeAdapter
+    lateinit var adapter: ProfileAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
         _bn = FragmentProfileBinding.inflate(inflater, container, false)
@@ -50,7 +54,7 @@ class ProfileFragment : BaseFragment() {
             StaggeredGridLayoutManager(2,
             StaggeredGridLayoutManager.VERTICAL)
         )
-        refreshAdapter(PhotoList())
+        refreshAdapter()
 
         initObserve()
     }
@@ -69,21 +73,20 @@ class ProfileFragment : BaseFragment() {
         }
     }
 
-    fun refreshAdapter(items: PhotoList){
-        adapter = HomeAdapter(this, items){photo ->
+    fun refreshAdapter(){
+        adapter = ProfileAdapter(this){photo ->
             sendPhotoToDetailFragment(photo)
         }
         recyclerView.adapter = adapter
     }
 
-    private fun sendPhotoToDetailFragment(position: PhotoHomePage){
+    private fun sendPhotoToDetailFragment(position: Pin){
         val args = Bundle()
-        args.putString("id", position.id)
-        args.putString("photo", position.urls!!.regular)
+        args.putString("id", position.id_user)
+        args.putString("photo", position.photo)
         args.putString("description", position.description)
-        args.putString("alt_description", position.altDescription.toString())
-        args.putString("userName", position.user!!.name)
-        findNavController().navigate(R.id.action_homeFragment_to_detailFragment, args)
+        args.putString("userName", position.user_name)
+        findNavController().navigate(R.id.action_profileFragment_to_detailFragment, args)
     }
 
 }

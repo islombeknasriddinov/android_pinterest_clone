@@ -124,8 +124,10 @@ class SearchFragment : BaseFragment() {
 
     private fun sendTextToResultSearchFragment(text: String) {
         var args = Bundle()
-        args.putString("text", text)
-        findNavController().navigate(R.id.action_searchFragment_to_searchResultFragment, args)
+        if (text.isNotEmpty()){
+            args.putString("text", text)
+            findNavController().navigate(R.id.action_searchFragment_to_searchResultFragment, args)
+        }
     }
 
     private fun getHistory(): ArrayList<SearchHistory> {
@@ -137,7 +139,7 @@ class SearchFragment : BaseFragment() {
         adapter = SearchHistoryAdapter(requireContext(), items) { text ->
             if (text.text!!.isNotEmpty()){
                 et_search.setText(text.text)
-                editLastCursor(bn.etSearch)
+                editLastCursor(et_search)
                 sendTextToResultSearchFragment(text.text.toString())
             }
         }
@@ -202,7 +204,7 @@ class SearchFragment : BaseFragment() {
         popular_adapter = PopularAdapter(requireContext(), items){ text ->
             if (text.title.isNotEmpty()){
                 et_search.setText(text.title)
-                editLastCursor(bn.etSearch)
+                editLastCursor(et_search)
                 sendTextToResultSearchFragment(text.title)
             }
         }

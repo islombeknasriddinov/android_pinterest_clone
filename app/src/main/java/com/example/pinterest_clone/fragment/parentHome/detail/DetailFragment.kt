@@ -1,6 +1,5 @@
 package com.example.pinterest_clone.fragment.parentHome.detail
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -74,16 +73,15 @@ class DetailFragment : BaseFragment() {
             val photo = it?.getString("photo")
             val description = it?.getString("description").toString()
             val userName = it?.getString("userName")
-            val color = it?.getString("color")
 
-            Glide.with(this).load(photo).placeholder(ColorDrawable(Color.parseColor(color)))
+            Glide.with(this).load(photo).placeholder(ColorDrawable(Color.GRAY))
                 .into(bn.ivDetailedPhoto)
             bn.description.text = description
             bn.comment.text = userName
             viewModel.apiRelatedPhoto(id)
 
             bn.btnSave.setOnClickListener {
-                viewModel.insertPhotoHomeDB(Pin(0, photo!!, description, userName!!))
+                viewModel.insertPhotoHomeDB(Pin(0, id, photo!!, description, userName!!))
             }
 
             bn.ivMore.setOnClickListener {

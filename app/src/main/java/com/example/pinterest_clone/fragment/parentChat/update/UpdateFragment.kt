@@ -74,11 +74,11 @@ class UpdateFragment : BaseFragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
             Logger.d(TAG, it.toString())
-//            if (it) {
-//                bn.pbLoading.visibility = View.VISIBLE
-//            } else {
-//                bn.pbLoading.visibility = View.GONE
-//            }
+            if (it) {
+                bn.pbLoading.visibility = View.VISIBLE
+            } else {
+                bn.pbLoading.visibility = View.GONE
+            }
         }
     }
 

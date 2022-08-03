@@ -12,11 +12,15 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.HomeAdapter
 import com.example.pinterest_clone.databinding.FragmentExploreBinding
 import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.parentHome.home.HomeFragment
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.PhotoList
+import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ExploreViewModel
 
 class ExploreFragment : BaseFragment() {
+    private val TAG = ExploreFragment::class.java.simpleName
+
     companion object {
         fun newInstance(text: String): ExploreFragment {
             val args = Bundle()
@@ -87,19 +91,20 @@ class ExploreFragment : BaseFragment() {
 
         viewModel.searchResultFromApi.observe(viewLifecycleOwner){
             adapter.addPhotosFromExplore(it)
+
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            //Logger.d(TAG, it.toString())
+            Logger.d("error", it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-//            Logger.d(TAG, it.toString())
-//            if (it) {
-//                bn.pbLoading.visibility = View.VISIBLE
-//            } else {
-//                bn.pbLoading.visibility = View.GONE
-//            }
+            Logger.d(TAG, it.toString())
+            if (it) {
+                bn.pbLoading.visibility = View.VISIBLE
+            } else {
+                bn.pbLoading.visibility = View.GONE
+            }
         }
     }
 
@@ -118,7 +123,7 @@ class ExploreFragment : BaseFragment() {
     private fun sendPhotoToDetailFragment(position: PhotoHomePage){
         val args = Bundle()
         args.putString("id", position.id)
-        args.putString("photo", position.urls!!.thumb)
+        args.putString("photo", position.urls!!.regular)
         args.putString("description", position.description)
         args.putString("alt_description", position.altDescription.toString())
         args.putString("userName", position.user!!.name)

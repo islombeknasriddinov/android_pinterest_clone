@@ -9,6 +9,7 @@ import java.io.Serializable
  class Pin(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long,
+    @ColumnInfo(name = "id_user") val id_user: String,
     @ColumnInfo(name = "photo") var photo: String? = null,
     @ColumnInfo(name = "description") var description: String,
     @ColumnInfo(name = "user_name") var user_name: String
