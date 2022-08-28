@@ -58,7 +58,6 @@ class ProfileAdapter : ListAdapter<Pin, ProfileAdapter.ItemViewHolder>(
 
     fun addPhotosFromDB(photoList: List<Pin>) {
         val items = ArrayList<Pin>()
-        items.addAll(currentList)
         items.addAll(photoList)
         items.reverse()
         submitList(items)
