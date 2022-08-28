@@ -1,5 +1,6 @@
 package com.example.pinterest_clone.fragment.parentHome.detail
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.OrientationHelper
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
@@ -29,8 +32,30 @@ class DetailFragment : BaseFragment() {
     private val bn get() = _bn!!
 
     val viewModel: DetailViewModel by viewModels()
-    lateinit var adapter: HomeAdapter
+    val adapter by lazy { HomeAdapter() }
     lateinit var recyclerView: RecyclerView
+
+    private var id: String? = null
+    private var photo: String? = null
+    private var description: String? = null
+    private var userName: String? = null
+    private var position: Int? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        arguments.let {
+            id = it?.getString("id").toString()
+            photo = it?.getString("photo")
+            description = it?.getString("description").toString()
+            userName = it?.getString("userName")
+            position = it?.getInt("position")
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.apiRelatedPhoto(id!!)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,40 +80,34 @@ class DetailFragment : BaseFragment() {
         countDownTimer()
 
         recyclerView = bn.relatedView
-        recyclerView.setLayoutManager(
-            StaggeredGridLayoutManager(
-                2,
-                StaggeredGridLayoutManager.VERTICAL
-            )
-        )
+        val st = StaggeredGridLayoutManager(2,
+            OrientationHelper.VERTICAL)
+        st.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS)
+        recyclerView.layoutManager = st
+        (recyclerView.layoutManager as StaggeredGridLayoutManager?)!!.invalidateSpanAssignments()
+        recyclerView.adapter = adapter
 
-        refreshAdapter(PhotoList())
+        adapter.onClick = { photoHomePage, imageView, position ->
+            sendPhotoToDetailFragment(photoHomePage, position)
+        }
 
         bn.ivBack.setOnClickListener {
             navigateUp()
         }
 
-        arguments.let {
-            val id = it?.getString("id").toString()
-            val photo = it?.getString("photo")
-            val description = it?.getString("description").toString()
-            val userName = it?.getString("userName")
-
-            Glide.with(this).load(photo).placeholder(ColorDrawable(Color.GRAY))
-                .into(bn.ivDetailedPhoto)
-            bn.description.text = description
-            bn.comment.text = userName
-            viewModel.apiRelatedPhoto(id)
-
-            bn.btnSave.setOnClickListener {
-                viewModel.insertPhotoHomeDB(Pin(0, id, photo!!, description, userName!!))
-            }
-
-            bn.ivMore.setOnClickListener {
-                Dialogs.showBottomSheetDialog(requireContext(), photo!!)
-            }
+        bn.btnSave.setOnClickListener {
+            viewModel.insertPhotoHomeDB(Pin(0, id!!, photo!!, description!!, userName!!))
         }
 
+        bn.ivMore.setOnClickListener {
+            Dialogs.showBottomSheetDialog(requireContext(), photo!!)
+        }
+
+
+        Glide.with(this).load(photo).placeholder(ColorDrawable(Color.GRAY))
+            .into(bn.ivDetailedPhoto)
+        bn.description.text = description
+        bn.comment.text = userName
     }
 
     private fun initObserve() {
@@ -97,7 +116,7 @@ class DetailFragment : BaseFragment() {
          */
 
         viewModel.relatedPhotoFromApi.observe(viewLifecycleOwner) {
-            adapter.addPhotosFromExplore(it)
+            adapter.submitData(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -123,19 +142,15 @@ class DetailFragment : BaseFragment() {
         }.start()
     }
 
-    private fun refreshAdapter(items: PhotoList) {
-        adapter = HomeAdapter(this, items) { relatedPhoto ->
-            sendPhotoToDetailFragment(relatedPhoto)
-        }
-        recyclerView.adapter = adapter
-    }
-
-    private fun sendPhotoToDetailFragment(relatedPhoto: PhotoHomePage) {
+    private fun sendPhotoToDetailFragment(photo: PhotoHomePage, position: Int){
         val args = Bundle()
-        args.putString("id", relatedPhoto.id)
-        args.putString("photo", relatedPhoto.urls!!.regular)
-        args.putString("description", relatedPhoto.description)
-        args.putString("userName", relatedPhoto.user!!.name)
+        args.putString("id", photo.id)
+        args.putString("photo", photo.urls!!.regular)
+        args.putString("description", photo.description)
+        args.putString("userName", photo.user!!.name)
+        args.putString("color", photo.color)
+        args.putInt("position", position)
+
         findNavController().navigate(R.id.action_detailFragment_to_detailFragment, args)
     }
 

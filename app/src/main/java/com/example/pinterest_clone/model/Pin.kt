@@ -2,10 +2,11 @@ package com.example.pinterest_clone.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = "pins_table")
+@Entity(tableName = "pins_table",indices = [Index(value = ["photo"], unique = true)])
  class Pin(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long,

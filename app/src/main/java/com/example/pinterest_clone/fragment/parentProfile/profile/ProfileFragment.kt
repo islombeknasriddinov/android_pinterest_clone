@@ -1,25 +1,19 @@
 package com.example.pinterest_clone.fragment.parentProfile.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.DialogFragmentNavigatorDestinationBuilder
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
-import com.example.pinterest_clone.adapter.HomeAdapter
 import com.example.pinterest_clone.adapter.ProfileAdapter
 import com.example.pinterest_clone.databinding.FragmentProfileBinding
 import com.example.pinterest_clone.fragment.BaseFragment
-import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Logger
-import com.example.pinterest_clone.viewmodel.HomeViewModel
 import com.example.pinterest_clone.viewmodel.ProfileViewModel
 
 class ProfileFragment : BaseFragment() {
@@ -30,7 +24,12 @@ class ProfileFragment : BaseFragment() {
 
     val viewModel: ProfileViewModel by viewModels()
     lateinit var recyclerView: RecyclerView
-    lateinit var adapter: ProfileAdapter
+    val adapter by lazy { ProfileAdapter() }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getPhotoHomeFromDB()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
         _bn = FragmentProfileBinding.inflate(inflater, container, false)
@@ -48,13 +47,15 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun initView() {
-        viewModel.getPhotoHomeFromDB()
         recyclerView = bn.rvSavedPhotos
         recyclerView.setLayoutManager(
             StaggeredGridLayoutManager(2,
             StaggeredGridLayoutManager.VERTICAL)
         )
-        refreshAdapter()
+        recyclerView.adapter = adapter
+        adapter.sendImage = { photoHomePage ->
+            sendPhotoToDetailFragment(photoHomePage)
+        }
 
         initObserve()
     }
@@ -65,20 +66,14 @@ class ProfileFragment : BaseFragment() {
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner){
-            Logger.d("@@@", it.toString())
+            Logger.d(TAG, it.toString())
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner){
-            Logger.d("@@@", it.toString())
+            Logger.d(TAG, it.toString())
         }
     }
 
-    fun refreshAdapter(){
-        adapter = ProfileAdapter(this){photo ->
-            sendPhotoToDetailFragment(photo)
-        }
-        recyclerView.adapter = adapter
-    }
 
     private fun sendPhotoToDetailFragment(position: Pin){
         val args = Bundle()

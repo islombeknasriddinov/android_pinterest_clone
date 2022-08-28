@@ -41,7 +41,7 @@ class ProfilesFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = SearchProfilesAdapter(this)
-        searchPhotosFromApi()
+        searchPhotosFromApi(page)
     }
 
     override fun onCreateView(
@@ -75,7 +75,7 @@ class ProfilesFragment : BaseFragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)) {
-                    searchPhotosFromApi()
+                    searchPhotosFromApi(++page)
                 }
             }
         })
@@ -108,7 +108,7 @@ class ProfilesFragment : BaseFragment() {
     }
 
 
-    private fun searchPhotosFromApi() {
+    private fun searchPhotosFromApi(page: Int) {
         text = arguments!!.getString("text").toString()
         viewModel.profilePhotos(page, text!!, per_page)
     }

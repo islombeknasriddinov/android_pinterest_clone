@@ -12,9 +12,7 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.HomeAdapter
 import com.example.pinterest_clone.databinding.FragmentExploreBinding
 import com.example.pinterest_clone.fragment.BaseFragment
-import com.example.pinterest_clone.fragment.parentHome.home.HomeFragment
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ExploreViewModel
 
@@ -35,7 +33,7 @@ class ExploreFragment : BaseFragment() {
     private val bn get() = _bn!!
 
     val viewModel: ExploreViewModel by viewModels()
-    lateinit var adapter: HomeAdapter
+    val adapter by lazy { HomeAdapter() }
     lateinit var recyclerView: RecyclerView
 
     var page = 1
@@ -44,7 +42,7 @@ class ExploreFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        searchPhotosFromApi()
+        searchPhotosFromApi(page)
     }
 
     override fun onCreateView(
@@ -73,12 +71,16 @@ class ExploreFragment : BaseFragment() {
         val st = StaggeredGridLayoutManager(2,
             StaggeredGridLayoutManager.VERTICAL)
         recyclerView.layoutManager = st
-        refreshAdapter(PhotoList())
+        recyclerView.adapter = adapter
+        adapter.onClick = { photoHomePage, imageView, position ->
+            sendPhotoToDetailFragment(photoHomePage)
+        }
+
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (!recyclerView.canScrollVertically(1)){
-                    searchPhotosFromApi()
+                    searchPhotosFromApi(++page)
                 }
             }
         })
@@ -90,8 +92,7 @@ class ExploreFragment : BaseFragment() {
          */
 
         viewModel.searchResultFromApi.observe(viewLifecycleOwner){
-            adapter.addPhotosFromExplore(it)
-
+            adapter.submitData(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -108,14 +109,7 @@ class ExploreFragment : BaseFragment() {
         }
     }
 
-    fun refreshAdapter(items: PhotoList){
-        adapter = HomeAdapter(this, items){photo ->
-            sendPhotoToDetailFragment(photo)
-        }
-        recyclerView.adapter = adapter
-    }
-
-    private fun searchPhotosFromApi() {
+    private fun searchPhotosFromApi(page: Int) {
         val text = arguments?.getString("text")!!
         viewModel.searchPhotos(page, text, per_page)
     }

@@ -23,7 +23,6 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val relatedPhotoFromApi = MutableLiveData<ArrayList<PhotoHomePage>>()
-    val photosFromDB = MutableLiveData<PhotoHomePage>()
 
     fun apiRelatedPhoto(id: String){
         isLoading.value = true

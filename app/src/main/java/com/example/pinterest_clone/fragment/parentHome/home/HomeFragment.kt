@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
@@ -16,14 +17,13 @@ import com.example.pinterest_clone.databinding.FragmentHomeBinding
 import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.Filter
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.HomeViewModel
 
 class HomeFragment : BaseFragment() {
     private val TAG = HomeFragment::class.java.simpleName
     val viewModel: HomeViewModel by viewModels()
-    lateinit var adapter: HomeAdapter
+    val adapter by lazy { HomeAdapter() }
 
     var page = 1
     var per_page = 20
@@ -61,9 +61,16 @@ class HomeFragment : BaseFragment() {
     private fun initView() {
         recyclerView = bn.rvItems
         val st = StaggeredGridLayoutManager(2,
-            StaggeredGridLayoutManager.VERTICAL)
+            OrientationHelper.VERTICAL)
+        st.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS)
         recyclerView.layoutManager = st
-        refreshAdapter(PhotoList())
+        (recyclerView.layoutManager as StaggeredGridLayoutManager?)!!.invalidateSpanAssignments()
+        recyclerView.adapter = adapter
+
+        adapter.onClick = { photoHomePage, imageView, position ->
+            sendPhotoToDetailFragment(photoHomePage)
+        }
+
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -86,7 +93,7 @@ class HomeFragment : BaseFragment() {
          */
 
         viewModel.photoHomeFromApi.observe(viewLifecycleOwner){
-            adapter.addPhotosFromHome(it)
+            adapter.submitData(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
@@ -112,21 +119,13 @@ class HomeFragment : BaseFragment() {
         return filters
     }
 
-    fun refreshAdapter(items: PhotoList){
-        adapter = HomeAdapter(this, items){photo ->
-            sendPhotoToDetailFragment(photo)
-        }
-        recyclerView.adapter = adapter
-    }
-
-    private fun sendPhotoToDetailFragment(position: PhotoHomePage){
+    private fun sendPhotoToDetailFragment(photo: PhotoHomePage){
         val args = Bundle()
-        args.putString("id", position.id)
-        args.putString("photo", position.urls!!.regular)
-        args.putString("description", position.description)
-        args.putString("userName", position.user!!.name)
-        args.putString("color", position.color)
-
+        args.putString("id", photo.id)
+        args.putString("photo", photo.urls!!.regular)
+        args.putString("description", photo.description)
+        args.putString("userName", photo.user!!.name)
+        args.putString("color", photo.color)
         findNavController().navigate(R.id.action_homeFragment_to_detailFragment, args)
     }
 

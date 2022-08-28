@@ -1,77 +1,62 @@
 package com.example.pinterest_clone.adapter
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.core.view.ViewCompat
-import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.PhotoList
-import com.example.pinterest_clone.model.Pin
-import com.google.android.material.imageview.ShapeableImageView
 
-class HomeAdapter(var context: Fragment, var photoList : PhotoList ,var sendImage: (PhotoHomePage)->Unit) : BaseAdapter() {
+class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_DIF) {
+    var onClick: ((PhotoHomePage, ImageView, position: Int) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemViewHolder(view)
+    companion object{
+        val ITEM_DIF = object : DiffUtil.ItemCallback<PhotoHomePage>(){
+            override fun areItemsTheSame(oldItem: PhotoHomePage, newItem: PhotoHomePage): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: PhotoHomePage, newItem: PhotoHomePage): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = photoList[position]
+    fun submitData(list: List<PhotoHomePage>){
+        val items = ArrayList<PhotoHomePage>()
+        items.addAll(currentList)
+        items.addAll(list)
+        submitList(items)
+    }
 
-        if (holder is ItemViewHolder){
-            var img = holder.img
-            var description = holder.description
+    inner class ItemViewHolder(val bn: ItemHomeListBinding): RecyclerView.ViewHolder(bn.root){
+        fun bind(position: Int){
+            val item = getItem(adapterPosition)
+            with(bn){
+                ViewCompat.setTransitionName(ivPhoto, item.urls!!.thumb)
 
-            Glide.with(context).load(item.urls!!.thumb)
-                .placeholder(ColorDrawable(Color.parseColor(item.color)))
-                .into(img)
-            description.text = item.description
-            ViewCompat.setTransitionName(holder.img,""+position)
+                Glide.with(root).load(item.urls!!.thumb).placeholder(ColorDrawable(Color.parseColor(item.color))).into(ivPhoto)
+                tvTitle.text = item.description
 
-            img.setOnClickListener {
-                sendImage.invoke(item)
+                ivPhoto.setOnClickListener{
+                    onClick?.invoke(item, ivPhoto, position)
+                }
             }
         }
     }
 
-    override fun getItemCount(): Int {
-       return photoList.size
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        return ItemViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    class ItemViewHolder(val bn: ItemHomeListBinding):RecyclerView.ViewHolder(bn.root){
-        var img: ShapeableImageView
-        var description: TextView
-
-        init {
-            img = bn.ivPhoto
-            description = bn.tvTitle
-        }
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun addPhotosFromHome(photoList: PhotoList) {
-        this.photoList.addAll(photoList)
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun addPhotosFromExplore(photoList: ArrayList<PhotoHomePage>) {
-        this.photoList.addAll(photoList)
-        notifyDataSetChanged()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun addPhotosFromDB(photoList: ArrayList<Pin>) {
-        photoList.addAll(photoList)
-        notifyDataSetChanged()
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        holder.bind(position)
     }
 }

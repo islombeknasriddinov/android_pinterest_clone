@@ -100,4 +100,6 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
+    // ViewBindingPropertyDelegate
+    implementation "com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.6"
 }
