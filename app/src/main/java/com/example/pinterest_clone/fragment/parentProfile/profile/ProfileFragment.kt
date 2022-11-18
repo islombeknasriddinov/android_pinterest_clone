@@ -81,6 +81,8 @@ class ProfileFragment : BaseFragment() {
         args.putString("photo", position.photo)
         args.putString("description", position.description)
         args.putString("userName", position.user_name)
+        args.putBoolean("like", position.isLiked)
+        Logger.d(TAG, position.isLiked.toString())
         findNavController().navigate(R.id.action_profileFragment_to_detailFragment, args)
     }
 

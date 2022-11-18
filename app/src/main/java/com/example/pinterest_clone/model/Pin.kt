@@ -13,5 +13,6 @@ import java.io.Serializable
     @ColumnInfo(name = "id_user") val id_user: String,
     @ColumnInfo(name = "photo") var photo: String? = null,
     @ColumnInfo(name = "description") var description: String,
-    @ColumnInfo(name = "user_name") var user_name: String
+    @ColumnInfo(name = "user_name") var user_name: String,
+    @ColumnInfo(name = "isLiked") var isLiked: Boolean
 )

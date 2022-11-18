@@ -1,5 +1,6 @@
 package com.example.pinterest_clone.fragment.parentHome.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,9 @@ import com.example.pinterest_clone.model.Filter
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.HomeViewModel
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random
 
 class HomeFragment : BaseFragment() {
     private val TAG = HomeFragment::class.java.simpleName
@@ -74,7 +78,7 @@ class HomeFragment : BaseFragment() {
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (!recyclerView.canScrollVertically(1)){
+                if (!recyclerView.canScrollVertically(2)){
                     viewModel.apiPhotoHome(++page,per_page)
                 }
             }

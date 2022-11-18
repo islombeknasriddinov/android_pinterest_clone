@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.model.RelatedPhotos
+import com.example.pinterest_clone.model.Uri
 import com.example.pinterest_clone.repository.PhotoHomeRepository
 import com.example.pinterest_clone.utils.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,7 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val relatedPhotoFromApi = MutableLiveData<ArrayList<PhotoHomePage>>()
+    val uriFromApi = MutableLiveData<String>()
 
     fun apiRelatedPhoto(id: String){
         isLoading.value = true
@@ -44,6 +46,25 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
             })
         }
 
+    }
+
+    fun getUrlForDownloadImage(id:String){
+        isLoading.value = true
+        CoroutineScope(Dispatchers.IO).launch {
+            photoHomeRepository.apiGetUriForDownload(id).enqueue(object : Callback<Uri>{
+                override fun onResponse(call: Call<Uri>, response: Response<Uri>) {
+                   var uri = response.body()!!.url
+                    uriFromApi.postValue(uri!!)
+                    isLoading.value = false
+                    Logger.d("response", uri)
+                }
+
+                override fun onFailure(call: Call<Uri>, t: Throwable) {
+                   onError(t.message.toString())
+                }
+
+            })
+        }
     }
 
     fun onError(message: String) {

@@ -46,4 +46,7 @@ interface PhotoService {
         @Query("per_page") perPage: Int
     ): Call<ArrayList<Topic>>
 
+    @Headers("Authorization:$client_id $ACCESS_KEY")
+    @GET("/photos/{id}/download")
+    fun getUrlForDownloadImage(@Path("id") id: String): Call<Uri>
 }

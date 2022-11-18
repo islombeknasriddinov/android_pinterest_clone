@@ -3,6 +3,7 @@ package com.example.pinterest_clone.adapter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
@@ -16,6 +17,7 @@ import com.example.pinterest_clone.model.PhotoHomePage
 class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_DIF) {
     var onClick: ((PhotoHomePage, ImageView, position: Int) -> Unit)? = null
 
+
     companion object{
         val ITEM_DIF = object : DiffUtil.ItemCallback<PhotoHomePage>(){
             override fun areItemsTheSame(oldItem: PhotoHomePage, newItem: PhotoHomePage): Boolean {
@@ -23,7 +25,7 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
             }
 
             override fun areContentsTheSame(oldItem: PhotoHomePage, newItem: PhotoHomePage): Boolean {
-                return oldItem == newItem
+                return oldItem.urls!!.regular == newItem.urls!!.regular
             }
 
         }
@@ -36,6 +38,8 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
         submitList(items)
     }
 
+
+
     inner class ItemViewHolder(val bn: ItemHomeListBinding): RecyclerView.ViewHolder(bn.root){
         fun bind(position: Int){
             val item = getItem(adapterPosition)
@@ -44,6 +48,7 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
 
                 Glide.with(root).load(item.urls!!.thumb).placeholder(ColorDrawable(Color.parseColor(item.color))).into(ivPhoto)
                 tvTitle.text = item.description
+
 
                 ivPhoto.setOnClickListener{
                     onClick?.invoke(item, ivPhoto, position)

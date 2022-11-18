@@ -3,6 +3,7 @@ package com.example.pinterest_clone.fragment.parentHome.detail
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -34,12 +35,15 @@ class DetailFragment : BaseFragment() {
     val viewModel: DetailViewModel by viewModels()
     val adapter by lazy { HomeAdapter() }
     lateinit var recyclerView: RecyclerView
+    private var uri: String? = null
+    private var isClicked: Boolean = true
 
     private var id: String? = null
     private var photo: String? = null
     private var description: String? = null
     private var userName: String? = null
     private var position: Int? = null
+    private var isLiked: Boolean = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -49,12 +53,15 @@ class DetailFragment : BaseFragment() {
             description = it?.getString("description").toString()
             userName = it?.getString("userName")
             position = it?.getInt("position")
+            isLiked = it!!.getBoolean("like")
+            Logger.d(TAG, isLiked.toString())
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.apiRelatedPhoto(id!!)
+        viewModel.getUrlForDownloadImage(id!!)
     }
 
     override fun onCreateView(
@@ -78,6 +85,7 @@ class DetailFragment : BaseFragment() {
 
     private fun initView() {
         countDownTimer()
+        isLiked(isLiked)
 
         recyclerView = bn.relatedView
         val st = StaggeredGridLayoutManager(2,
@@ -96,18 +104,40 @@ class DetailFragment : BaseFragment() {
         }
 
         bn.btnSave.setOnClickListener {
-            viewModel.insertPhotoHomeDB(Pin(0, id!!, photo!!, description!!, userName!!))
+            viewModel.insertPhotoHomeDB(Pin(0, id!!, photo!!, description!!, userName!!, isLiked!!))
         }
 
         bn.ivMore.setOnClickListener {
-            Dialogs.showBottomSheetDialog(requireContext(), photo!!)
+            Dialogs.showBottomSheetDialog(requireContext(), getUri())
         }
 
+        bn.bLike.setOnClickListener {
+            if (isClicked){
+                bn.bLike.setImageResource(R.drawable.ic_like)
+                isClicked = false
+                isLiked = true
+            }else{
+                bn.bLike.setImageResource(R.drawable.ic_unlike)
+                isClicked = true
+                isLiked = false
+            }
+        }
 
         Glide.with(this).load(photo).placeholder(ColorDrawable(Color.GRAY))
             .into(bn.ivDetailedPhoto)
-        bn.description.text = description
+        if(description != null){
+            bn.description.text = description
+        }
+
         bn.comment.text = userName
+    }
+
+    private fun isLiked(liked: Boolean) {
+        if (liked){
+            bn.bLike.setImageResource(R.drawable.ic_like)
+        }else{
+            bn.bLike.setImageResource(R.drawable.ic_unlike)
+        }
     }
 
     private fun initObserve() {
@@ -131,6 +161,13 @@ class DetailFragment : BaseFragment() {
                 bn.pbLoading.visibility = View.GONE
             }
         }
+    }
+
+    private fun getUri(): String{
+        viewModel.uriFromApi.observe(viewLifecycleOwner){
+            uri = it
+        }
+        return uri.toString()
     }
 
     private fun countDownTimer() {

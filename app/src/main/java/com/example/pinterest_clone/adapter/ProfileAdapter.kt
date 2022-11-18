@@ -27,7 +27,7 @@ class ProfileAdapter : ListAdapter<Pin, ProfileAdapter.ItemViewHolder>(
 
             @SuppressLint("DiffUtilEquals")
             override fun areContentsTheSame(oldItem: Pin, newItem: Pin): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
         }
@@ -39,7 +39,11 @@ class ProfileAdapter : ListAdapter<Pin, ProfileAdapter.ItemViewHolder>(
             with(bn){
                 ViewCompat.setTransitionName(ivPhoto, item.photo)
                 Glide.with(root).load(item.photo).placeholder(ColorDrawable(Color.GRAY)).into(ivPhoto)
-                tvTitle.text = item.description
+
+                if(item.description != "null"){
+                    tvTitle.text = item.description
+                }
+
 
                 ivPhoto.setOnClickListener{
                     sendImage?.invoke(item)

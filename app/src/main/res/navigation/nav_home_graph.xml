@@ -35,7 +35,6 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
         <argument
-            android:name="photo"
-            app:argType="string" />
+            android:name="photo" />
     </fragment>
 </navigation>

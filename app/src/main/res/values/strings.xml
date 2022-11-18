@@ -9,7 +9,7 @@
     <string name="str_share_your_feed_back">Share your feedback</string>
     <string name="str_add_a_comment">Add a comment</string>
     <string name="str_more_like_this">More like this</string>
-    <string name="str_love_this_pin_let_know">Love this Pin? Let $ know!</string>
+    <string name="str_love_this_pin_let_know">Love this Pin? Let</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_search_for_ideas">Search for ideas</string>
     <string name="str_ideas_for_you">Ideas for you</string>
@@ -22,4 +22,5 @@
     <string name="str_profiles">Profiles</string>
     <string name="str_followers">followers</string>
     <string name="str_following">following</string>
+    <string name="str_know">know!</string>
 </resources>
