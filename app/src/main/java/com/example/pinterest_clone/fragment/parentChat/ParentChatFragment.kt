@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.fragment.BaseFragment
 
-class ParentChatFragment : BaseFragment() {
+open class ParentChatFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

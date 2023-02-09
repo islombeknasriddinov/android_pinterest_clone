@@ -8,10 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import com.example.pinterest_clone.utils.Logger
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,20 +22,16 @@ class UpdateViewModel @Inject constructor(private val photoHomeRepository: Photo
     fun apiTopics(page: Int, perPage: Int) {
         isLoading.value = true
         CoroutineScope(Dispatchers.IO).launch {
-            photoHomeRepository.apiChatUpdatePhotos(page, perPage)
-                .enqueue(object : Callback<ArrayList<Topic>> {
-                    override fun onResponse(
-                        call: Call<ArrayList<Topic>>,
-                        response: Response<ArrayList<Topic>>
-                    ) {
-                        updatePhotosFromApi.postValue(response.body()!!)
-                        isLoading.value = false
-                    }
-
-                    override fun onFailure(call: Call<ArrayList<Topic>>, t: Throwable) {
-                        onError(t.message.toString())
-                    }
-                })
+            val response = photoHomeRepository.apiChatUpdatePhotos(page, perPage)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val res = response.body()
+                    updatePhotosFromApi.postValue(res!!)
+                    isLoading.value = false
+                } else {
+                    onError("onError : ${response.message()}")
+                }
+            }
         }
     }
 

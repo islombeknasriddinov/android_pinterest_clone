@@ -3,7 +3,6 @@ package com.example.pinterest_clone.fragment.parentHome.detail
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -12,22 +11,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.OrientationHelper
-import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.HomeAdapter
 import com.example.pinterest_clone.databinding.FragmentDetailBinding
-import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.PhotoList
 import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Dialogs
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.DetailViewModel
 
-class DetailFragment : BaseFragment() {
+class DetailFragment : ParentHomeFragment() {
     private val TAG = DetailFragment::class.java.simpleName
     private var _bn: FragmentDetailBinding? = null
     private val bn get() = _bn!!
@@ -78,19 +75,16 @@ class DetailFragment : BaseFragment() {
         initView()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _bn = null
-    }
-
     private fun initView() {
         countDownTimer()
         isLiked(isLiked)
 
         recyclerView = bn.relatedView
-        val st = StaggeredGridLayoutManager(2,
-            OrientationHelper.VERTICAL)
-        st.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS)
+        val st = StaggeredGridLayoutManager(
+            2,
+            OrientationHelper.VERTICAL
+        )
+        st.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         recyclerView.layoutManager = st
         (recyclerView.layoutManager as StaggeredGridLayoutManager?)!!.invalidateSpanAssignments()
         recyclerView.adapter = adapter
@@ -104,7 +98,7 @@ class DetailFragment : BaseFragment() {
         }
 
         bn.btnSave.setOnClickListener {
-            viewModel.insertPhotoHomeDB(Pin(0, id!!, photo!!, description!!, userName!!, isLiked!!))
+            viewModel.insertPhotoHomeDB(Pin(0, id!!, photo!!, description!!, userName!!, isLiked))
         }
 
         bn.ivMore.setOnClickListener {
@@ -112,11 +106,11 @@ class DetailFragment : BaseFragment() {
         }
 
         bn.bLike.setOnClickListener {
-            if (isClicked){
+            if (isClicked) {
                 bn.bLike.setImageResource(R.drawable.ic_like)
                 isClicked = false
                 isLiked = true
-            }else{
+            } else {
                 bn.bLike.setImageResource(R.drawable.ic_unlike)
                 isClicked = true
                 isLiked = false
@@ -125,7 +119,7 @@ class DetailFragment : BaseFragment() {
 
         Glide.with(this).load(photo).placeholder(ColorDrawable(Color.GRAY))
             .into(bn.ivDetailedPhoto)
-        if(description != null){
+        if (description != null) {
             bn.description.text = description
         }
 
@@ -133,9 +127,9 @@ class DetailFragment : BaseFragment() {
     }
 
     private fun isLiked(liked: Boolean) {
-        if (liked){
+        if (liked) {
             bn.bLike.setImageResource(R.drawable.ic_like)
-        }else{
+        } else {
             bn.bLike.setImageResource(R.drawable.ic_unlike)
         }
     }
@@ -163,8 +157,8 @@ class DetailFragment : BaseFragment() {
         }
     }
 
-    private fun getUri(): String{
-        viewModel.uriFromApi.observe(viewLifecycleOwner){
+    private fun getUri(): String {
+        viewModel.uriFromApi.observe(viewLifecycleOwner) {
             uri = it
         }
         return uri.toString()
@@ -179,7 +173,7 @@ class DetailFragment : BaseFragment() {
         }.start()
     }
 
-    private fun sendPhotoToDetailFragment(photo: PhotoHomePage, position: Int){
+    private fun sendPhotoToDetailFragment(photo: PhotoHomePage, position: Int) {
         val args = Bundle()
         args.putString("id", photo.id)
         args.putString("photo", photo.urls!!.regular)
@@ -189,6 +183,11 @@ class DetailFragment : BaseFragment() {
         args.putInt("position", position)
 
         findNavController().navigate(R.id.action_detailFragment_to_detailFragment, args)
+    }
+
+    override fun onDestroy() {
+        _bn = null
+        super.onDestroy()
     }
 
 }

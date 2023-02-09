@@ -16,6 +16,7 @@ import com.example.pinterest_clone.adapter.PagerAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchResultBinding
 import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
 import com.example.pinterest_clone.fragment.parentSearch.result.explore.ExploreFragment
 import com.example.pinterest_clone.fragment.parentSearch.result.profiles.ProfilesFragment
 import com.example.pinterest_clone.manager.PrefsManager
@@ -24,7 +25,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-class SearchResultFragment : BaseFragment() {
+class SearchResultFragment : ParentSearchFragment() {
 
     private var _bn: FragmentSearchResultBinding? = null
     private val bn get() = _bn!!
@@ -40,7 +41,7 @@ class SearchResultFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        text = arguments!!.getString("text").toString()
+        text = requireArguments().getString("text").toString()
     }
 
     override fun onCreateView(
@@ -56,22 +57,6 @@ class SearchResultFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        bn.etSearch.setText(text)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setAdapter()
-        refreshAdapter()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _bn = null
     }
 
     private fun initView() {
@@ -92,7 +77,7 @@ class SearchResultFragment : BaseFragment() {
 
         tv_cancel.setOnClickListener {
             et_search.clearFocus()
-            isFocusableFalse(iv_back, tv_cancel, ll_search, rv_search_history)
+            editTextFocusableFalse(iv_back, tv_cancel, ll_search, rv_search_history)
         }
 
         iv_back.setOnClickListener {
@@ -101,9 +86,9 @@ class SearchResultFragment : BaseFragment() {
 
         et_search.setOnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
-                isFocusableTrue(iv_back, tv_cancel, ll_search, rv_search_history)
+                editTextFocusableTrue(iv_back, tv_cancel, ll_search, rv_search_history)
             } else {
-                isFocusableFalse(iv_back, tv_cancel, ll_search, rv_search_history)
+                editTextFocusableFalse(iv_back, tv_cancel, ll_search, rv_search_history)
             }
         }
 
@@ -117,18 +102,18 @@ class SearchResultFragment : BaseFragment() {
 
     private fun refreshSearchHistoryAdapter(items: ArrayList<SearchHistory>) {
         adapter = SearchHistoryAdapter(requireContext(), items) { text ->
-            if (text.text!!.isNotEmpty()){
+            if (text.text!!.isNotEmpty()) {
                 et_search.setText(text.text)
                 editLastCursor(et_search)
                 sendTextToResultSearchFragment(text.text.toString())
             }
         }
-        rv_search_history!!.adapter = adapter
+        rv_search_history.adapter = adapter
     }
 
     private fun sendTextToResultSearchFragment(text: String) {
         var args = Bundle()
-        if (text.isNotEmpty()){
+        if (text.isNotEmpty()) {
             args.putString("text", text)
             findNavController().navigate(R.id.action_searchResultFragment_self, args)
         }
@@ -147,7 +132,7 @@ class SearchResultFragment : BaseFragment() {
         tlFilter.setupWithViewPager(vpFilter)
     }
 
-    private fun imeActionSearch(et_search : EditText) {
+    private fun imeActionSearch(et_search: EditText) {
         et_search.setOnEditorActionListener(TextView.OnEditorActionListener { textView, i, keyEvent ->
             if (i == EditorInfo.IME_ACTION_SEARCH) {
                 if (et_search.text.isNotEmpty()) {
@@ -160,6 +145,22 @@ class SearchResultFragment : BaseFragment() {
             }
             false
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bn.etSearch.setText(text)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setAdapter()
+        refreshAdapter()
+    }
+
+    override fun onDestroy() {
+        _bn = null
+        super.onDestroy()
     }
 
 }

@@ -9,12 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterest_clone.adapter.SearchProfilesAdapter
 import com.example.pinterest_clone.databinding.FragmentProfilesBinding
-import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
 import com.example.pinterest_clone.utils.Logger
-import com.example.pinterest_clone.viewmodel.ExploreViewModel
 import com.example.pinterest_clone.viewmodel.ProfilesViewModel
 
-class ProfilesFragment : BaseFragment() {
+class ProfilesFragment : ParentSearchFragment() {
     private val TAG = ProfilesFragment::class.java.simpleName
 
     companion object {
@@ -63,11 +62,6 @@ class ProfilesFragment : BaseFragment() {
         recyclerView.adapter = adapter
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _bn = null
-    }
-
     private fun initView() {
         recyclerView = bn.rvProfiles
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -89,7 +83,7 @@ class ProfilesFragment : BaseFragment() {
          * Retrofit Related
          */
 
-        viewModel.photoHomeFromApi.observe(viewLifecycleOwner){
+        viewModel.photoHomeFromApi.observe(viewLifecycleOwner) {
             adapter.addProfiles(it)
         }
 
@@ -109,7 +103,12 @@ class ProfilesFragment : BaseFragment() {
 
 
     private fun searchPhotosFromApi(page: Int) {
-        text = arguments!!.getString("text").toString()
+        text = requireArguments().getString("text").toString()
         viewModel.profilePhotos(page, text!!, per_page)
+    }
+
+    override fun onDestroy() {
+        _bn = null
+        super.onDestroy()
     }
 }

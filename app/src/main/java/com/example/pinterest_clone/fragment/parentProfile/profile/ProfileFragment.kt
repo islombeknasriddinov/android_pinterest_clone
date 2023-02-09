@@ -11,12 +11,12 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.ProfileAdapter
 import com.example.pinterest_clone.databinding.FragmentProfileBinding
-import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.parentProfile.ParentProfileFragment
 import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ProfileViewModel
 
-class ProfileFragment : BaseFragment() {
+class ProfileFragment : ParentProfileFragment() {
     private val TAG = ProfileFragment::class.java.simpleName
 
     private var _bn: FragmentProfileBinding? = null
@@ -31,7 +31,11 @@ class ProfileFragment : BaseFragment() {
         viewModel.getPhotoHomeFromDB()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?, ): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _bn = FragmentProfileBinding.inflate(inflater, container, false)
         return bn.root
     }
@@ -41,16 +45,11 @@ class ProfileFragment : BaseFragment() {
         initView()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _bn = null
-    }
-
     private fun initView() {
         recyclerView = bn.rvSavedPhotos
-        recyclerView.setLayoutManager(
-            StaggeredGridLayoutManager(2,
-            StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(
+            2,
+            StaggeredGridLayoutManager.VERTICAL
         )
         recyclerView.adapter = adapter
         adapter.sendImage = { photoHomePage ->
@@ -61,21 +60,21 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun initObserve() {
-        viewModel.photoHomeFromDB.observe(viewLifecycleOwner){
+        viewModel.photoHomeFromDB.observe(viewLifecycleOwner) {
             adapter.addPhotosFromDB(it)
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner){
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             Logger.d(TAG, it.toString())
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner){
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
             Logger.d(TAG, it.toString())
         }
     }
 
 
-    private fun sendPhotoToDetailFragment(position: Pin){
+    private fun sendPhotoToDetailFragment(position: Pin) {
         val args = Bundle()
         args.putString("id", position.id_user)
         args.putString("photo", position.photo)
@@ -86,4 +85,8 @@ class ProfileFragment : BaseFragment() {
         findNavController().navigate(R.id.action_profileFragment_to_detailFragment, args)
     }
 
+    override fun onDestroy() {
+        _bn = null
+        super.onDestroy()
+    }
 }

@@ -8,17 +8,17 @@ import com.example.pinterest_clone.databinding.ItemHomeFilterBinding
 import com.example.pinterest_clone.fragment.parentHome.home.HomeFragment
 import com.example.pinterest_clone.model.Filter
 
-class FilterAdapter(var context: HomeFragment, var items: ArrayList<Filter>): BaseAdapter() {
+class FilterAdapter(var context: HomeFragment, var items: ArrayList<Filter>) : BaseAdapter() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val  view = ItemHomeFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemHomeFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return FilterViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val filter = items[position]
 
-        if (holder is FilterViewHolder){
+        if (holder is FilterViewHolder) {
             var tv_title = holder.tv_title
 
             tv_title.text = filter.title
@@ -29,7 +29,7 @@ class FilterAdapter(var context: HomeFragment, var items: ArrayList<Filter>): Ba
         return items.size
     }
 
-    class FilterViewHolder(val bn : ItemHomeFilterBinding): RecyclerView.ViewHolder(bn.root){
+    class FilterViewHolder(val bn: ItemHomeFilterBinding) : RecyclerView.ViewHolder(bn.root) {
         var tv_title: TextView
 
         init {

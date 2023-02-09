@@ -20,7 +20,7 @@ class ProfileViewModel @Inject constructor(private val photoHomeRepository: Phot
      * Retrofit Related
      */
 
-    fun getPhotoHomeFromDB(){
+    fun getPhotoHomeFromDB() {
         viewModelScope.launch {
             photoHomeFromDB.postValue(photoHomeRepository.getPhotosFromDB() as ArrayList<Pin>)
         }

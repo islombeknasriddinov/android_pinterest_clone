@@ -5,65 +5,55 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
-import com.example.pinterest_clone.model.RelatedPhotos
-import com.example.pinterest_clone.model.Uri
 import com.example.pinterest_clone.repository.PhotoHomeRepository
-import com.example.pinterest_clone.utils.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel  @Inject constructor(private val photoHomeRepository: PhotoHomeRepository) :
-    ViewModel(){
+class DetailViewModel @Inject constructor(private val photoHomeRepository: PhotoHomeRepository) :
+    ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
     val relatedPhotoFromApi = MutableLiveData<ArrayList<PhotoHomePage>>()
     val uriFromApi = MutableLiveData<String>()
 
-    fun apiRelatedPhoto(id: String){
+
+    fun apiRelatedPhoto(id: String) {
         isLoading.value = true
         CoroutineScope(Dispatchers.IO).launch {
-            photoHomeRepository.apiPhotoRelated(id).enqueue(object : Callback<RelatedPhotos> {
-                override fun onResponse(
-                    call: Call<RelatedPhotos>,
-                    response: Response<RelatedPhotos>
-                ) {
-                    val photoList: ArrayList<PhotoHomePage> = response.body()!!.results!!
-                    relatedPhotoFromApi.postValue(photoList)
+            var response = photoHomeRepository.apiPhotoRelated(id)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val photoList: ArrayList<PhotoHomePage>? = response.body()?.results
+                    relatedPhotoFromApi.postValue(photoList!!)
                     isLoading.value = false
+                } else {
+                    onError("onError : ${response.message()}")
                 }
-
-                override fun onFailure(call: Call<RelatedPhotos>, t: Throwable) {
-                    onError("Error : ${t.message}")
-                }
-
-            })
+            }
         }
 
     }
 
-    fun getUrlForDownloadImage(id:String){
+
+    fun getUrlForDownloadImage(id: String) {
         isLoading.value = true
         CoroutineScope(Dispatchers.IO).launch {
-            photoHomeRepository.apiGetUriForDownload(id).enqueue(object : Callback<Uri>{
-                override fun onResponse(call: Call<Uri>, response: Response<Uri>) {
-                   var uri = response.body()!!.url
+            val response = photoHomeRepository.apiGetUriForDownload(id)
+            withContext(Dispatchers.Main) {
+                if (response.isSuccessful) {
+                    val res = response.body()
+                    val uri = res?.url
                     uriFromApi.postValue(uri!!)
                     isLoading.value = false
-                    Logger.d("response", uri)
+                } else {
+                    onError("onError : ${response.message()}")
                 }
-
-                override fun onFailure(call: Call<Uri>, t: Throwable) {
-                   onError(t.message.toString())
-                }
-
-            })
+            }
         }
     }
 
@@ -76,7 +66,7 @@ class DetailViewModel  @Inject constructor(private val photoHomeRepository: Phot
      * Room related
      */
 
-    fun insertPhotoHomeDB(pin: Pin){
+    fun insertPhotoHomeDB(pin: Pin) {
         viewModelScope.launch {
             photoHomeRepository.insertPhotosToDB(pin)
         }

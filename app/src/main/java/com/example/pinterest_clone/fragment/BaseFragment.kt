@@ -10,13 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 open class BaseFragment : Fragment() {
 
     //hideKeyboard
-    fun hideKeyboard() {
+    open fun hideKeyboard() {
         val manage =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         manage.hideSoftInputFromWindow(requireView().windowToken, 0)
@@ -24,7 +23,7 @@ open class BaseFragment : Fragment() {
 
 
     //showKeyboard
-    fun showKeyboard(editText: EditText) {
+    open fun showKeyboard(editText: EditText) {
         editText.requestFocus()
         val content =
             requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -37,23 +36,23 @@ open class BaseFragment : Fragment() {
 
 
     //Toast
-    fun toaster(context : Context, msg: String) {
+    open fun toaster(context: Context, msg: String) {
         val toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
         toast.setGravity(Gravity.TOP, 0, 0)
         toast.show()
     }
 
-    fun isFocusableTrue(
+    open fun editTextFocusableTrue(
         ivSearch: ImageView,
         tvCancel: TextView,
         llSearch: LinearLayout,
         rvSearchHistory: RecyclerView
     ) {
         ivSearch.animate()
-        val hide_ivSearch = TranslateAnimation(0F, -100F, 0F, 0F)
-        hide_ivSearch.duration = 300
-        hide_ivSearch.fillAfter = true
-        ivSearch.startAnimation(hide_ivSearch)
+        val hideIvSearch = TranslateAnimation(0F, -100F, 0F, 0F)
+        hideIvSearch.duration = 300
+        hideIvSearch.fillAfter = true
+        ivSearch.startAnimation(hideIvSearch)
         ivSearch.visibility = View.GONE
 
         tvCancel.animate()
@@ -63,7 +62,7 @@ open class BaseFragment : Fragment() {
         rvSearchHistory.visibility = View.VISIBLE
     }
 
-    fun isFocusableFalse(
+    open fun editTextFocusableFalse(
         ivSearch: ImageView,
         tvCancel: TextView,
         llSearch: LinearLayout,
@@ -71,17 +70,17 @@ open class BaseFragment : Fragment() {
     ) {
         hideKeyboard()
         ivSearch.animate()
-        val show_ivSearch = TranslateAnimation(-100F, 0F, 0F, 0F)
-        show_ivSearch.duration = 300
-        show_ivSearch.fillBefore = true
+        val showIvSearch = TranslateAnimation(-100F, 0F, 0F, 0F)
+        showIvSearch.duration = 300
+        showIvSearch.fillBefore = true
         ivSearch.visibility = View.VISIBLE
-        ivSearch.startAnimation(show_ivSearch)
+        ivSearch.startAnimation(showIvSearch)
 
         tvCancel.animate()
-        val hide_tvCancel = TranslateAnimation(0F, tvCancel.width.toFloat(), 0F, 0F)
-        hide_tvCancel.duration = 300
-        hide_tvCancel.fillBefore = true
-        tvCancel.startAnimation(hide_tvCancel)
+        val hideTvCancel = TranslateAnimation(0F, tvCancel.width.toFloat(), 0F, 0F)
+        hideTvCancel.duration = 300
+        hideTvCancel.fillBefore = true
+        tvCancel.startAnimation(hideTvCancel)
         tvCancel.visibility = View.GONE
 
         llSearch.layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -90,11 +89,11 @@ open class BaseFragment : Fragment() {
 
     }
 
-    fun editLastCursor(etSearch: EditText) {
+    open fun editLastCursor(etSearch: EditText) {
         etSearch.setSelection(etSearch.length())
     }
 
-    fun navigateUp(){
+    open fun navigateUp() {
         findNavController().navigateUp()
     }
 

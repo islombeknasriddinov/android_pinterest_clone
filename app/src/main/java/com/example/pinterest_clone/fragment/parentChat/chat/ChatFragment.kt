@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.pinterest_clone.databinding.FragmentChatBinding
-import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.parentChat.ParentChatFragment
 
-class ChatFragment : BaseFragment() {
+class ChatFragment : ParentChatFragment() {
     private var _bn: FragmentChatBinding? = null
     private val bn get() = _bn!!
 
@@ -25,12 +25,12 @@ class ChatFragment : BaseFragment() {
         initView()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _bn = null
-    }
-
     private fun initView() {
 
+    }
+
+    override fun onDestroy() {
+        _bn = null
+        super.onDestroy()
     }
 }

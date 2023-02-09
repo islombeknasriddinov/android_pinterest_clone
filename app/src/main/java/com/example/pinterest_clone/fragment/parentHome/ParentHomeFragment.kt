@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.fragment.BaseFragment
 
-class ParentHomeFragment : BaseFragment() {
+open class ParentHomeFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

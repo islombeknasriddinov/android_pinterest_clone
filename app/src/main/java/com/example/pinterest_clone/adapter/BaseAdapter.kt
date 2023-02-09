@@ -16,7 +16,4 @@ open class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         TODO("Not yet implemented")
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
-    }
 }

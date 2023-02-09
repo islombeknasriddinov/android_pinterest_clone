@@ -29,7 +29,8 @@ class UpdatesAdapter(var context: Fragment) : RecyclerView.Adapter<RecyclerView.
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = ItemUpdatesElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view =
+            ItemUpdatesElementBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UpdatesViewHolder(view)
     }
 

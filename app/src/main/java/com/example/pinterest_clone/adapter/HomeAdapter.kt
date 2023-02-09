@@ -18,20 +18,23 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
     var onClick: ((PhotoHomePage, ImageView, position: Int) -> Unit)? = null
 
 
-    companion object{
-        val ITEM_DIF = object : DiffUtil.ItemCallback<PhotoHomePage>(){
+    companion object {
+        val ITEM_DIF = object : DiffUtil.ItemCallback<PhotoHomePage>() {
             override fun areItemsTheSame(oldItem: PhotoHomePage, newItem: PhotoHomePage): Boolean {
                 return oldItem.id == newItem.id
             }
 
-            override fun areContentsTheSame(oldItem: PhotoHomePage, newItem: PhotoHomePage): Boolean {
+            override fun areContentsTheSame(
+                oldItem: PhotoHomePage,
+                newItem: PhotoHomePage
+            ): Boolean {
                 return oldItem.urls!!.regular == newItem.urls!!.regular
             }
 
         }
     }
 
-    fun submitData(list: List<PhotoHomePage>){
+    fun submitData(list: List<PhotoHomePage>) {
         val items = ArrayList<PhotoHomePage>()
         items.addAll(currentList)
         items.addAll(list)
@@ -39,18 +42,18 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
     }
 
 
+    inner class ItemViewHolder(val bn: ItemHomeListBinding) : RecyclerView.ViewHolder(bn.root) {
+        fun bind(position: Int) {
+            val item = getItem(absoluteAdapterPosition)
+            with(bn) {
+                ViewCompat.setTransitionName(ivPhoto, item.urls?.thumb)
 
-    inner class ItemViewHolder(val bn: ItemHomeListBinding): RecyclerView.ViewHolder(bn.root){
-        fun bind(position: Int){
-            val item = getItem(adapterPosition)
-            with(bn){
-                ViewCompat.setTransitionName(ivPhoto, item.urls!!.thumb)
-
-                Glide.with(root).load(item.urls!!.thumb).placeholder(ColorDrawable(Color.parseColor(item.color))).into(ivPhoto)
+                Glide.with(root).load(item.urls?.thumb)
+                    .placeholder(ColorDrawable(Color.parseColor(item.color))).into(ivPhoto)
                 tvTitle.text = item.description
 
 
-                ivPhoto.setOnClickListener{
+                ivPhoto.setOnClickListener {
                     onClick?.invoke(item, ivPhoto, position)
                 }
             }
@@ -58,7 +61,13 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemHomeListBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ItemViewHolder(
+            ItemHomeListBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

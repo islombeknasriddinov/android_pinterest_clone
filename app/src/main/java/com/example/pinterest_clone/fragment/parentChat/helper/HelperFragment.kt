@@ -6,16 +6,16 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PagerAdapter
 import com.example.pinterest_clone.databinding.FragmentHelperPageBinding
+import com.example.pinterest_clone.fragment.parentChat.ParentChatFragment
 import com.example.pinterest_clone.fragment.parentChat.chat.ChatFragment
 import com.example.pinterest_clone.fragment.parentChat.update.UpdateFragment
 import com.google.android.material.tabs.TabLayout
 
-class HelperFragment : Fragment() {
+class HelperFragment : ParentChatFragment() {
     private var _bn: FragmentHelperPageBinding? = null
     private val bn get() = _bn!!
 
@@ -66,12 +66,6 @@ class HelperFragment : Fragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        setAdapter()
-        refreshAdapter()
-    }
-
     private fun changeIconVisible(view: View, position: Int) {
         view.visibility = if (position == 0) VISIBLE else INVISIBLE
     }
@@ -87,6 +81,17 @@ class HelperFragment : Fragment() {
     private fun refreshAdapter() {
         vpFilter.adapter = pagerAdapter
         tlFilter.setupWithViewPager(vpFilter)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setAdapter()
+        refreshAdapter()
+    }
+
+    override fun onDestroy() {
+        _bn = null
+        super.onDestroy()
     }
 }
 
