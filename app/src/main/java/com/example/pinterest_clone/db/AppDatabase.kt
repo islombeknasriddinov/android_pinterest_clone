@@ -1,12 +1,25 @@
 package com.example.pinterest_clone.db
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
+import androidx.room.*
+import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
+import com.google.gson.Gson
 
+
+class PhotoTypeConverter {
+    @TypeConverter
+    fun fromPhoto(photoItem: PhotoHomePage): String {
+        return Gson().toJson(photoItem)
+    }
+
+    @TypeConverter
+    fun toPhoto(json: String): PhotoHomePage {
+        return Gson().fromJson(json, PhotoHomePage::class.java)
+    }
+}
 @Database(entities = [Pin::class], version = 1, exportSchema = false)
+@TypeConverters(PhotoTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getPhotoHomeDao(): PhotoHomeDao
 

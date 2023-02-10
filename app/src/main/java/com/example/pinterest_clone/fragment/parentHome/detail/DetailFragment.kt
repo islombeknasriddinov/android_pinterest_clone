@@ -59,7 +59,8 @@ class DetailFragment : ParentHomeFragment() {
         initObserve()
         isLiked(isLiked)
 
-        Glide.with(this).load(photoHome.urls?.regular).placeholder(ColorDrawable(Color.GRAY))
+        Glide.with(this).load(photoHome.urls?.regular)
+            .placeholder(ColorDrawable(Color.GRAY))
             .into(bn.ivDetailedPhoto)
         bn.description.text = photoHome.description
 
@@ -81,8 +82,6 @@ class DetailFragment : ParentHomeFragment() {
             }
         }
 
-        viewModel.apiRelatedPhoto(photoHome.id ?: "")
-
         recyclerView = bn.relatedView
         val st = StaggeredGridLayoutManager(
             2,
@@ -99,20 +98,19 @@ class DetailFragment : ParentHomeFragment() {
 
         bn.ivBack.setOnClickListener {
             close()
+
         }
 
         bn.btnSave.setOnClickListener {
             viewModel.insertPhotoHomeDB(
-                Pin(
-                    0,
-                    photoHome.id ?: "",
-                    photoHome.urls?.regular,
-                    photoHome.description,
-                    photoHome.user?.username,
-                    isLiked
-                )
+                Pin(0, photoHome)
             )
         }
+        loadRelatedPhotos()
+    }
+
+    private fun loadRelatedPhotos() {
+        viewModel.apiRelatedPhoto(photoHome.id ?: "")
     }
 
     private fun isLiked(liked: Boolean) {

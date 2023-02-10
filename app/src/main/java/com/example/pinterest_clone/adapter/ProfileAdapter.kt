@@ -11,13 +11,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
+import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
 
 
 class ProfileAdapter : ListAdapter<Pin, ProfileAdapter.ItemViewHolder>(
     ITEM_DIF
 ) {
-    var sendImage: ((Pin)->Unit)? = null
+    var sendImage: ((PhotoHomePage)->Unit)? = null
 
     companion object{
         val ITEM_DIF = object : DiffUtil.ItemCallback<Pin>(){
@@ -35,10 +36,10 @@ class ProfileAdapter : ListAdapter<Pin, ProfileAdapter.ItemViewHolder>(
 
     inner class ItemViewHolder(val bn: ItemHomeListBinding): RecyclerView.ViewHolder(bn.root){
         fun bind(){
-            val item = getItem(adapterPosition)
+            val item = getItem(adapterPosition).photoHome
             with(bn){
-                ViewCompat.setTransitionName(ivPhoto, item.photo)
-                Glide.with(root).load(item.photo).placeholder(ColorDrawable(Color.GRAY)).into(ivPhoto)
+                ViewCompat.setTransitionName(ivPhoto, item.urls?.regular)
+                Glide.with(root).load(item.urls?.regular).placeholder(ColorDrawable(Color.GRAY)).into(ivPhoto)
 
                 if(item.description != "null"){
                     tvTitle.text = item.description

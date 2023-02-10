@@ -1,5 +1,6 @@
 package com.example.pinterest_clone.model
 
+import androidx.room.Embedded
 import java.io.Serializable
 
 class PhotoList : ArrayList<PhotoHomePage>()

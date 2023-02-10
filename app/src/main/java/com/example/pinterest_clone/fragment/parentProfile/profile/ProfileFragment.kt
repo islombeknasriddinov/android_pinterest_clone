@@ -12,6 +12,7 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.ProfileAdapter
 import com.example.pinterest_clone.databinding.FragmentProfileBinding
 import com.example.pinterest_clone.fragment.parentProfile.ParentProfileFragment
+import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ProfileViewModel
@@ -74,7 +75,7 @@ class ProfileFragment : ParentProfileFragment() {
     }
 
 
-    private fun sendPhotoToDetailFragment(pin: Pin) {
+    private fun sendPhotoToDetailFragment(pin: PhotoHomePage) {
         val args = Bundle()
         args.putSerializable("photoHome", pin)
         open(R.id.action_profileFragment_to_detailFragment, args)

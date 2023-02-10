@@ -42,7 +42,7 @@ class DetailViewModel @Inject constructor(private val photoHomeRepository: Photo
     }
 
 
-    fun getUrlForDownloadImage(id: String) {
+    private fun getUrlForDownloadImage(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val response = photoHomeRepository.apiGetUriForDownload(id)
             withContext(Dispatchers.Main) {
