@@ -10,8 +10,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-@Suppress("DEPRECATION")
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -19,14 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            setTransparentStatusBarColor(
-                this,
-                R.color.black,
-                R.color.white,
-                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            )
-        }
+        setTransparentStatusBarColor(
+            this,
+            R.color.black,
+            R.color.white,
+            View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        )
         initViews()
     }
 
@@ -36,17 +35,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setTransparentStatusBarColor(
-        context: Context,
-        textColor: Int,
-        statusColor: Int,
-        lightStatus: Int
+        context: Context?,
+        textColor: Int?,
+        statusColor: Int?,
+        lightStatus: Int?
     ) {
         window.decorView.systemUiVisibility =
-            ContextCompat.getColor(context, textColor) //  set status text dark
+            ContextCompat.getColor(context!!, textColor!!) //  set status text dark
         window.statusBarColor = ContextCompat.getColor(
             context,
-            statusColor
+            statusColor!!
         ) // set status bar color
-        window.decorView.systemUiVisibility = lightStatus
+        window.decorView.systemUiVisibility = lightStatus!!
     }
 }

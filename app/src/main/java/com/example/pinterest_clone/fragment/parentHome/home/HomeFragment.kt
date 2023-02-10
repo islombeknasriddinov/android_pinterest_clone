@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.FilterAdapter
-import com.example.pinterest_clone.adapter.HomeAdapter
+import com.example.pinterest_clone.adapter.MainAdapter
 import com.example.pinterest_clone.databinding.FragmentHomeBinding
 import com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment
 import com.example.pinterest_clone.model.Filter
@@ -24,7 +23,7 @@ import kotlin.collections.ArrayList
 class HomeFragment : ParentHomeFragment() {
     private val TAG = HomeFragment::class.java.simpleName
     val viewModel: HomeViewModel by viewModels()
-    val adapter = HomeAdapter()
+    val adapter = MainAdapter()
 
     var page = 1
     var per_page = 20
@@ -64,8 +63,8 @@ class HomeFragment : ParentHomeFragment() {
         (recyclerView.layoutManager as StaggeredGridLayoutManager?)!!.invalidateSpanAssignments()
         recyclerView.adapter = adapter
 
-        adapter.onClick = { photoHomePage, imageView, position ->
-            sendPhotoToDetailFragment(photoHomePage)
+        adapter.onClick = { photoHomePage ->
+            sendPhotoToDetailFragment(photoHomePage ?: PhotoHomePage())
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -108,20 +107,14 @@ class HomeFragment : ParentHomeFragment() {
 
     private fun getAllFilters(): ArrayList<Filter> {
         val filters: ArrayList<Filter> = ArrayList()
-
         filters.add(Filter("All"))
-
         return filters
     }
 
-    private fun sendPhotoToDetailFragment(photo: PhotoHomePage) {
+    private fun sendPhotoToDetailFragment(photoHome: PhotoHomePage) {
         val args = Bundle()
-        args.putString("id", photo.id)
-        args.putString("photo", photo.urls?.regular)
-        args.putString("description", photo.description)
-        args.putString("userName", photo.user?.name)
-        args.putString("color", photo.color)
-        findNavController().navigate(R.id.action_homeFragment_to_detailFragment, args)
+        args.putSerializable("photoHome", photoHome)
+        open(R.id.action_homeFragment_to_detailFragment, args)
     }
 
     private fun refreshStoryAdapter(chats: ArrayList<Filter>) {

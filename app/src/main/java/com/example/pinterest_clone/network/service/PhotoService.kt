@@ -11,7 +11,7 @@ import retrofit2.http.Query
 interface PhotoService {
 
     companion object {
-        private const val ACCESS_KEY = "LEOaOtfFbCnYO9THs9tg7pqGgESlkr_Y-pPgT29LekI"
+        private const val ACCESS_KEY = "VrmC2qLyWuHCxsnNBK_FhJKL6j_JvjOPD0gwffc5Jmk"
         private const val client_id = "Client-ID"
     }
 

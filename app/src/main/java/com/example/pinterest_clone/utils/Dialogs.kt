@@ -9,47 +9,47 @@ import com.example.pinterest_clone.databinding.BottomSheetDialogBinding
 import com.example.pinterest_clone.fragment.BaseFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-class Dialogs{
+class Dialogs(var context: Context, var photo: String) {
+    private var _dBn: BottomSheetDialogBinding? = null
+    private val dBn get() = _dBn!!
+    private val bottomSheetDialog: BottomSheetDialog = BottomSheetDialog(context)
 
-   companion object{
-       val baseFragment =  BaseFragment()
-       private var _dBn: BottomSheetDialogBinding? = null
-       private val dBn get() = _dBn!!
+    init {
+        _dBn = BottomSheetDialogBinding.inflate(bottomSheetDialog.layoutInflater)
+        bottomSheetDialog.setContentView(dBn.root)
+        showBottomSheetDialog()
+    }
 
-       @SuppressLint("CheckResult")
-       fun showBottomSheetDialog(context: Context, photo: String) {
-           val bottomSheetDialog = BottomSheetDialog(context)
-           _dBn = BottomSheetDialogBinding.inflate(bottomSheetDialog.layoutInflater)
-           bottomSheetDialog.setContentView(dBn.root)
+    private fun showBottomSheetDialog() {
 
-           val copy = dBn.llCopy
-           val upload = dBn.llUploadProfile
-           val download = dBn.llDownload
-
-           upload!!.setOnClickListener {
-               baseFragment.toaster(context,"\tImage Saved to Profile\t")
-               bottomSheetDialog.dismiss()
-           }
-
-           download!!.setOnClickListener {
-               Utils.saveImageToGallery(context, photo)
-               bottomSheetDialog.dismiss()
-           }
-
-           copy!!.setOnClickListener {
-               val clipboard = ContextCompat.getSystemService(context, ClipboardManager::class.java)
-               val clip = ClipData.newPlainText("label",photo)
-               clipboard!!.setPrimaryClip(clip)
-
-               baseFragment.toaster(context,"\tLink copied to clipboard\t")
-
-               bottomSheetDialog.dismiss()
-           }
-
-           bottomSheetDialog.show()
+        val download = dBn.llDownload
+        val upload = dBn.llUploadProfile
+        val copy = dBn.llCopy
 
 
-       }
-   }
+        download.setOnClickListener {
+            Utils.saveImageToGallery(context, photo)
+            bottomSheetDialog.dismiss()
+        }
+
+        upload.setOnClickListener {
+            Utils.toaster(context, "\tImage Saved to Profile\t")
+            bottomSheetDialog.dismiss()
+        }
+
+        copy.setOnClickListener {
+            val clipboard = ContextCompat.getSystemService(context, ClipboardManager::class.java)
+            val clip = ClipData.newPlainText("label", photo)
+            clipboard!!.setPrimaryClip(clip)
+
+            Utils.toaster(context, "\tLink copied to clipboard\t")
+
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.show()
+
+
+    }
 
 }

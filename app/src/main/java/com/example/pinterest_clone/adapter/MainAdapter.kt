@@ -3,9 +3,7 @@ package com.example.pinterest_clone.adapter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -14,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.example.pinterest_clone.databinding.ItemHomeListBinding
 import com.example.pinterest_clone.model.PhotoHomePage
 
-class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_DIF) {
-    var onClick: ((PhotoHomePage, ImageView, position: Int) -> Unit)? = null
+class MainAdapter : ListAdapter<PhotoHomePage, MainAdapter.ItemViewHolder>(ITEM_DIF) {
+    var onClick: ((PhotoHomePage?) -> Unit)? = null
 
 
     companion object {
@@ -28,7 +26,7 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
                 oldItem: PhotoHomePage,
                 newItem: PhotoHomePage
             ): Boolean {
-                return oldItem.urls!!.regular == newItem.urls!!.regular
+                return oldItem.urls?.regular == newItem.urls?.regular
             }
 
         }
@@ -43,8 +41,8 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
 
 
     inner class ItemViewHolder(val bn: ItemHomeListBinding) : RecyclerView.ViewHolder(bn.root) {
-        fun bind(position: Int) {
-            val item = getItem(absoluteAdapterPosition)
+        fun bind() {
+            val item = getItem(adapterPosition)
             with(bn) {
                 ViewCompat.setTransitionName(ivPhoto, item.urls?.thumb)
 
@@ -54,7 +52,7 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
 
 
                 ivPhoto.setOnClickListener {
-                    onClick?.invoke(item, ivPhoto, position)
+                    onClick?.invoke(item)
                 }
             }
         }
@@ -71,6 +69,6 @@ class HomeAdapter : ListAdapter<PhotoHomePage, HomeAdapter.ItemViewHolder>(ITEM_
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind()
     }
 }

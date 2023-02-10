@@ -34,7 +34,7 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
-        <argument
-            android:name="photo" />
+        <argument android:name="photoHome"
+            app:argType="com.example.pinterest_clone.model.PhotoHomePage" />
     </fragment>
 </navigation>

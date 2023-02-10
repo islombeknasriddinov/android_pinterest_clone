@@ -30,6 +30,7 @@ class DetailViewModel @Inject constructor(private val photoHomeRepository: Photo
                 if (response.isSuccessful) {
                     val photoList: ArrayList<PhotoHomePage>? = response.body()?.results
                     relatedPhotoFromApi.postValue(photoList!!)
+                    getUrlForDownloadImage(id)
                     isLoading.value = false
                 } else {
                     onError("onError : ${response.message()}")
@@ -37,19 +38,18 @@ class DetailViewModel @Inject constructor(private val photoHomeRepository: Photo
             }
         }
 
+
     }
 
 
     fun getUrlForDownloadImage(id: String) {
-        isLoading.value = true
         CoroutineScope(Dispatchers.IO).launch {
             val response = photoHomeRepository.apiGetUriForDownload(id)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     val res = response.body()
                     val uri = res?.url
-                    uriFromApi.postValue(uri!!)
-                    isLoading.value = false
+                    uriFromApi.postValue(uri ?: "")
                 } else {
                     onError("onError : ${response.message()}")
                 }

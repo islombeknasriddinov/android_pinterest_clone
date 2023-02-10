@@ -74,15 +74,10 @@ class ProfileFragment : ParentProfileFragment() {
     }
 
 
-    private fun sendPhotoToDetailFragment(position: Pin) {
+    private fun sendPhotoToDetailFragment(pin: Pin) {
         val args = Bundle()
-        args.putString("id", position.id_user)
-        args.putString("photo", position.photo)
-        args.putString("description", position.description)
-        args.putString("userName", position.user_name)
-        args.putBoolean("like", position.isLiked)
-        Logger.d(TAG, position.isLiked.toString())
-        findNavController().navigate(R.id.action_profileFragment_to_detailFragment, args)
+        args.putSerializable("photoHome", pin)
+        open(R.id.action_profileFragment_to_detailFragment, args)
     }
 
     override fun onDestroy() {

@@ -1,7 +1,7 @@
 package com.example.pinterest_clone.fragment
 
 import android.content.Context
-import android.view.Gravity
+import android.os.Bundle
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
@@ -9,6 +9,8 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pinterest_clone.R
+import com.example.pinterest_clone.utils.Utils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,9 +39,7 @@ open class BaseFragment : Fragment() {
 
     //Toast
     open fun toaster(context: Context, msg: String) {
-        val toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
-        toast.setGravity(Gravity.TOP, 0, 0)
-        toast.show()
+        Utils.toaster(context, msg)
     }
 
     open fun editTextFocusableTrue(
@@ -93,8 +93,11 @@ open class BaseFragment : Fragment() {
         etSearch.setSelection(etSearch.length())
     }
 
-    open fun navigateUp() {
+    open fun close() {
         findNavController().navigateUp()
     }
 
+    open fun open(actionId: Int, args: Bundle?) {
+        findNavController().navigate(actionId, args)
+    }
 }

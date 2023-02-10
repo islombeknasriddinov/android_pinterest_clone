@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class PhotoList : ArrayList<PhotoHomePage>()
 
-data class PhotoHomePage (
+class PhotoHomePage(
     val id: String? = null,
     val description: String? = null,
     val urls: Urls? = null,
@@ -26,21 +26,21 @@ data class PhotoHomePage (
     val user: User? = null,
 ) : Serializable
 
-data class WelcomeLinks (
+class WelcomeLinks(
     val self: String? = null,
     val html: String? = null,
     val download: String? = null,
     val downloadLocation: String? = null,
 ) : Serializable
 
-data class Sponsorship (
+class Sponsorship(
     val impressionUrls: List<String>? = null,
     val tagline: String? = null,
     val taglineURL: String? = null,
     val sponsor: User? = null,
 ) : Serializable
 
-data class User (
+class User(
     val id: String? = null,
     val updatedAt: String? = null,
     val username: String? = null,
@@ -62,7 +62,7 @@ data class User (
     val social: Social? = null
 ) : Serializable
 
-data class UserLinks (
+class UserLinks(
     val self: String? = null,
     val html: String? = null,
     val photos: String? = null,
@@ -72,22 +72,22 @@ data class UserLinks (
     val followers: String? = null,
 ) : Serializable
 
-data class ProfileImage (
+class ProfileImage(
     val small: String? = null,
     val medium: String? = null,
     val large: String? = null,
 ) : Serializable
 
-data class Social (
+class Social(
     val instagramUsername: String,
     val portfolioURL: String? = null,
     val twitterUsername: String? = null,
     val paypalEmail: Any? = null
 ) : Serializable
 
-class TopicSubmissions()
+class TopicSubmissions
 
-data class Urls (
+class Urls(
     val raw: String,
     val full: String,
     val regular: String,

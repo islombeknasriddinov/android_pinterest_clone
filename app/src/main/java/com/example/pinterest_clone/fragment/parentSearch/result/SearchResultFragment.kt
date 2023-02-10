@@ -15,7 +15,6 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PagerAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchResultBinding
-import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
 import com.example.pinterest_clone.fragment.parentSearch.result.explore.ExploreFragment
 import com.example.pinterest_clone.fragment.parentSearch.result.profiles.ProfilesFragment
@@ -81,7 +80,7 @@ class SearchResultFragment : ParentSearchFragment() {
         }
 
         iv_back.setOnClickListener {
-            navigateUp()
+            close()
         }
 
         et_search.setOnFocusChangeListener { view, hasFocus ->

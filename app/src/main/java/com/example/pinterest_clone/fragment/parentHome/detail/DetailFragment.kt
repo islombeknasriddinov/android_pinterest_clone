@@ -4,18 +4,16 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.pinterest_clone.R
-import com.example.pinterest_clone.adapter.HomeAdapter
+import com.example.pinterest_clone.adapter.MainAdapter
 import com.example.pinterest_clone.databinding.FragmentDetailBinding
 import com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment
 import com.example.pinterest_clone.model.PhotoHomePage
@@ -24,41 +22,23 @@ import com.example.pinterest_clone.utils.Dialogs
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.DetailViewModel
 
+@Suppress("DEPRECATION")
 class DetailFragment : ParentHomeFragment() {
     private val TAG = DetailFragment::class.java.simpleName
     private var _bn: FragmentDetailBinding? = null
     private val bn get() = _bn!!
 
     val viewModel: DetailViewModel by viewModels()
-    val adapter by lazy { HomeAdapter() }
+    val adapter by lazy { MainAdapter() }
     lateinit var recyclerView: RecyclerView
-    private var uri: String? = null
+    private var photoHome: PhotoHomePage = PhotoHomePage()
     private var isClicked: Boolean = true
 
-    private var id: String? = null
-    private var photo: String? = null
-    private var description: String? = null
-    private var userName: String? = null
-    private var position: Int? = null
     private var isLiked: Boolean = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        arguments.let {
-            id = it?.getString("id").toString()
-            photo = it?.getString("photo")
-            description = it?.getString("description").toString()
-            userName = it?.getString("userName")
-            position = it?.getInt("position")
-            isLiked = it!!.getBoolean("like")
-            Logger.d(TAG, isLiked.toString())
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel.apiRelatedPhoto(id!!)
-        viewModel.getUrlForDownloadImage(id!!)
+        photoHome = (arguments?.getSerializable("photoHome") as? PhotoHomePage) ?: PhotoHomePage()
     }
 
     override fun onCreateView(
@@ -76,33 +56,17 @@ class DetailFragment : ParentHomeFragment() {
     }
 
     private fun initView() {
-        countDownTimer()
+        initObserve()
         isLiked(isLiked)
 
-        recyclerView = bn.relatedView
-        val st = StaggeredGridLayoutManager(
-            2,
-            OrientationHelper.VERTICAL
-        )
-        st.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        recyclerView.layoutManager = st
-        (recyclerView.layoutManager as StaggeredGridLayoutManager?)!!.invalidateSpanAssignments()
-        recyclerView.adapter = adapter
+        Glide.with(this).load(photoHome.urls?.regular).placeholder(ColorDrawable(Color.GRAY))
+            .into(bn.ivDetailedPhoto)
+        bn.description.text = photoHome.description
 
-        adapter.onClick = { photoHomePage, imageView, position ->
-            sendPhotoToDetailFragment(photoHomePage, position)
-        }
-
-        bn.ivBack.setOnClickListener {
-            navigateUp()
-        }
-
-        bn.btnSave.setOnClickListener {
-            viewModel.insertPhotoHomeDB(Pin(0, id!!, photo!!, description!!, userName!!, isLiked))
-        }
+        bn.comment.text = photoHome.user?.username
 
         bn.ivMore.setOnClickListener {
-            Dialogs.showBottomSheetDialog(requireContext(), getUri())
+            Dialogs(requireContext(), getUri())
         }
 
         bn.bLike.setOnClickListener {
@@ -117,13 +81,38 @@ class DetailFragment : ParentHomeFragment() {
             }
         }
 
-        Glide.with(this).load(photo).placeholder(ColorDrawable(Color.GRAY))
-            .into(bn.ivDetailedPhoto)
-        if (description != null) {
-            bn.description.text = description
+        viewModel.apiRelatedPhoto(photoHome.id ?: "")
+
+        recyclerView = bn.relatedView
+        val st = StaggeredGridLayoutManager(
+            2,
+            OrientationHelper.VERTICAL
+        )
+        st.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        recyclerView.layoutManager = st
+        (recyclerView.layoutManager as StaggeredGridLayoutManager?)?.invalidateSpanAssignments()
+        recyclerView.adapter = adapter
+
+        adapter.onClick = { photoHomePage ->
+            sendPhotoToDetailFragment(photoHomePage ?: PhotoHomePage())
         }
 
-        bn.comment.text = userName
+        bn.ivBack.setOnClickListener {
+            close()
+        }
+
+        bn.btnSave.setOnClickListener {
+            viewModel.insertPhotoHomeDB(
+                Pin(
+                    0,
+                    photoHome.id ?: "",
+                    photoHome.urls?.regular,
+                    photoHome.description,
+                    photoHome.user?.username,
+                    isLiked
+                )
+            )
+        }
     }
 
     private fun isLiked(liked: Boolean) {
@@ -135,10 +124,6 @@ class DetailFragment : ParentHomeFragment() {
     }
 
     private fun initObserve() {
-        /**
-         * Retrofit Related
-         */
-
         viewModel.relatedPhotoFromApi.observe(viewLifecycleOwner) {
             adapter.submitData(it)
         }
@@ -158,31 +143,17 @@ class DetailFragment : ParentHomeFragment() {
     }
 
     private fun getUri(): String {
+        var uri = ""
         viewModel.uriFromApi.observe(viewLifecycleOwner) {
             uri = it
         }
-        return uri.toString()
+        return uri
     }
 
-    private fun countDownTimer() {
-        object : CountDownTimer(500, 50) {
-            override fun onTick(p0: Long) {}
-            override fun onFinish() {
-                initObserve()
-            }
-        }.start()
-    }
-
-    private fun sendPhotoToDetailFragment(photo: PhotoHomePage, position: Int) {
+    private fun sendPhotoToDetailFragment(photoHome: PhotoHomePage) {
         val args = Bundle()
-        args.putString("id", photo.id)
-        args.putString("photo", photo.urls!!.regular)
-        args.putString("description", photo.description)
-        args.putString("userName", photo.user!!.name)
-        args.putString("color", photo.color)
-        args.putInt("position", position)
-
-        findNavController().navigate(R.id.action_detailFragment_to_detailFragment, args)
+        args.putSerializable("photoHome", photoHome)
+        open(R.id.action_detailFragment_to_detailFragment, args)
     }
 
     override fun onDestroy() {

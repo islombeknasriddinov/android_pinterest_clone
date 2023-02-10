@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
-import com.example.pinterest_clone.adapter.HomeAdapter
+import com.example.pinterest_clone.adapter.MainAdapter
 import com.example.pinterest_clone.databinding.FragmentExploreBinding
 import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
 import com.example.pinterest_clone.model.PhotoHomePage
@@ -33,7 +33,7 @@ class ExploreFragment : ParentSearchFragment() {
     private val bn get() = _bn!!
 
     val viewModel: ExploreViewModel by viewModels()
-    val adapter by lazy { HomeAdapter() }
+    val adapter by lazy { MainAdapter() }
     lateinit var recyclerView: RecyclerView
 
     var page = 1
@@ -69,8 +69,8 @@ class ExploreFragment : ParentSearchFragment() {
         )
         recyclerView.layoutManager = st
         recyclerView.adapter = adapter
-        adapter.onClick = { photoHomePage, imageView, position ->
-            sendPhotoToDetailFragment(photoHomePage)
+        adapter.onClick = { photoHomePage ->
+            sendPhotoToDetailFragment(photoHomePage ?: PhotoHomePage())
         }
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -111,14 +111,10 @@ class ExploreFragment : ParentSearchFragment() {
         viewModel.searchPhotos(page, text, per_page)
     }
 
-    private fun sendPhotoToDetailFragment(position: PhotoHomePage) {
+    private fun sendPhotoToDetailFragment(photoHome: PhotoHomePage) {
         val args = Bundle()
-        args.putString("id", position.id)
-        args.putString("photo", position.urls!!.regular)
-        args.putString("description", position.description)
-        args.putString("alt_description", position.altDescription.toString())
-        args.putString("userName", position.user!!.name)
-        findNavController().navigate(R.id.action_exploreFragment_to_detailFragment, args)
+        args.putSerializable("photoHome", photoHome)
+        open(R.id.action_exploreFragment_to_detailFragment, args)
     }
 
     override fun onDestroy() {
