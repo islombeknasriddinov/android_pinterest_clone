@@ -52,20 +52,15 @@ class UpdateFragment : ParentChatFragment() {
     }
 
     private fun initViewsObserve() {
-        /**
-         * Retrofit Related
-         */
-
         viewModel.updatePhotosFromApi.observe(viewLifecycleOwner) {
             updatesAdapter.addTopics(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
+            showSnackbar(requireView(), it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
             if (it) {
                 bn.pbLoading.visibility = View.VISIBLE
             } else {

@@ -1,7 +1,9 @@
 package com.example.pinterest_clone.fragment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
@@ -9,9 +11,10 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pinterest_clone.R
 import com.example.pinterest_clone.utils.Utils
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 open class BaseFragment : Fragment() {
@@ -40,6 +43,10 @@ open class BaseFragment : Fragment() {
     //Toast
     open fun toaster(context: Context, msg: String) {
         Utils.toaster(context, msg)
+    }
+
+    open fun showSnackbar(view: View, text: String) {
+        Utils.snackbar(view, text)
     }
 
     open fun editTextFocusableTrue(

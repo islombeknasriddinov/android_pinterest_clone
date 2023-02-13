@@ -1,7 +1,6 @@
 package com.example.pinterest_clone.activity
 
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity

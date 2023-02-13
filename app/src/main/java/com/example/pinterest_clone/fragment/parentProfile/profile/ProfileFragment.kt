@@ -65,11 +65,11 @@ class ProfileFragment : ParentProfileFragment() {
             adapter.addPhotosFromDB(it)
         }
 
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            showSnackbar(requireView(), it)
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) {
+        viewModel.isLoading.observe(viewLifecycleOwner) {
             Logger.d(TAG, it.toString())
         }
     }

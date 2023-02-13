@@ -84,20 +84,15 @@ class ExploreFragment : ParentSearchFragment() {
     }
 
     private fun initObserver() {
-        /**
-         * Retrofit Related
-         */
-
         viewModel.searchResultFromApi.observe(viewLifecycleOwner) {
             adapter.submitData(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Logger.d("error", it)
+            showSnackbar(requireView(), it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
             if (it) {
                 bn.pbLoading.visibility = View.VISIBLE
             } else {

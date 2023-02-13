@@ -79,20 +79,15 @@ class ProfilesFragment : ParentSearchFragment() {
     }
 
     private fun initObserve() {
-        /**
-         * Retrofit Related
-         */
-
         viewModel.photoHomeFromApi.observe(viewLifecycleOwner) {
             adapter.addProfiles(it)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
+            showSnackbar(requireView(), it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
             if (it) {
                 bn.pbLoading.visibility = View.VISIBLE
             } else {

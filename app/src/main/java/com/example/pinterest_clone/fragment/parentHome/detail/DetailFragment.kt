@@ -62,7 +62,12 @@ class DetailFragment : ParentHomeFragment() {
         Glide.with(this).load(photoHome.urls?.regular)
             .placeholder(ColorDrawable(Color.GRAY))
             .into(bn.ivDetailedPhoto)
-        bn.description.text = photoHome.description
+
+        if (photoHome.description != null && photoHome.description != "") {
+            bn.description.visibility = View.VISIBLE
+            bn.description.text = photoHome.description
+        }
+
 
         bn.comment.text = photoHome.user?.username
 
@@ -127,11 +132,10 @@ class DetailFragment : ParentHomeFragment() {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
+            showSnackbar(requireView(), it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
             if (it) {
                 bn.pbLoading.visibility = View.VISIBLE
             } else {

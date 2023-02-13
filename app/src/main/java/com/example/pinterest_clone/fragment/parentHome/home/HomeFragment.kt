@@ -90,12 +90,10 @@ class HomeFragment : ParentHomeFragment() {
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
-            toaster(this.requireContext(), it.toString())
+            showSnackbar(requireView(), it)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
-            Logger.d(TAG, it.toString())
             if (it) {
                 bn.pbLoading.visibility = View.VISIBLE
             } else {
