@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentSearch.result
+package com.example.pinterest_clone.fragment.result
 
 import android.content.Context
 import android.os.Bundle
@@ -15,9 +15,8 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PagerAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchResultBinding
-import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
-import com.example.pinterest_clone.fragment.parentSearch.result.explore.ExploreFragment
-import com.example.pinterest_clone.fragment.parentSearch.result.profiles.ProfilesFragment
+import com.example.pinterest_clone.fragment.result.explore.ExploreFragment
+import com.example.pinterest_clone.fragment.result.profiles.ProfilesFragment
 import com.example.pinterest_clone.manager.PrefsManager
 import com.example.pinterest_clone.model.SearchHistory
 import com.google.android.material.tabs.TabLayout

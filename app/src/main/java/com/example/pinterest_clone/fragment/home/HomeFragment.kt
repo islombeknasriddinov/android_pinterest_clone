@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentHome.home
+package com.example.pinterest_clone.fragment.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,14 +13,13 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.FilterAdapter
 import com.example.pinterest_clone.adapter.MainAdapter
 import com.example.pinterest_clone.databinding.FragmentHomeBinding
-import com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.Filter
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.HomeViewModel
 import kotlin.collections.ArrayList
 
-class HomeFragment : ParentHomeFragment() {
+class HomeFragment : BaseFragment() {
     private val TAG = HomeFragment::class.java.simpleName
     val viewModel: HomeViewModel by viewModels()
     val adapter = MainAdapter()

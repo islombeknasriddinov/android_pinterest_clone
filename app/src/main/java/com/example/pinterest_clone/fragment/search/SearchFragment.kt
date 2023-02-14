@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentSearch.search
+package com.example.pinterest_clone.fragment.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PopularAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchBinding
-import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.manager.PrefsManager
 import com.example.pinterest_clone.model.Popular
 import com.example.pinterest_clone.model.SearchHistory
@@ -24,7 +24,7 @@ import java.lang.reflect.Type
 import kotlin.collections.ArrayList
 
 
-class SearchFragment : ParentSearchFragment() {
+class SearchFragment : BaseFragment() {
     private var _bn: FragmentSearchBinding? = null
     private val bn get() = _bn!!
 

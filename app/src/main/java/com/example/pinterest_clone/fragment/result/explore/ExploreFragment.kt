@@ -1,22 +1,20 @@
-package com.example.pinterest_clone.fragment.parentSearch.result.explore
+package com.example.pinterest_clone.fragment.result.explore
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.MainAdapter
 import com.example.pinterest_clone.databinding.FragmentExploreBinding
-import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ExploreViewModel
 
-class ExploreFragment : ParentSearchFragment() {
+class ExploreFragment : BaseFragment() {
     private val TAG = ExploreFragment::class.java.simpleName
 
     companion object {

@@ -1,13 +1,13 @@
-package com.example.pinterest_clone.fragment.parentChat.chat
+package com.example.pinterest_clone.fragment.chat
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.pinterest_clone.databinding.FragmentChatBinding
-import com.example.pinterest_clone.fragment.parentChat.ParentChatFragment
+import com.example.pinterest_clone.fragment.BaseFragment
 
-class ChatFragment : ParentChatFragment() {
+class ChatFragment : BaseFragment() {
     private var _bn: FragmentChatBinding? = null
     private val bn get() = _bn!!
 

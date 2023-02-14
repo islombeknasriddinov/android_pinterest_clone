@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentChat.helper
+package com.example.pinterest_clone.fragment.helper
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +10,12 @@ import androidx.viewpager.widget.ViewPager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PagerAdapter
 import com.example.pinterest_clone.databinding.FragmentHelperPageBinding
-import com.example.pinterest_clone.fragment.parentChat.ParentChatFragment
-import com.example.pinterest_clone.fragment.parentChat.chat.ChatFragment
-import com.example.pinterest_clone.fragment.parentChat.update.UpdateFragment
+import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.chat.ChatFragment
+import com.example.pinterest_clone.fragment.update.UpdateFragment
 import com.google.android.material.tabs.TabLayout
 
-class HelperFragment : ParentChatFragment() {
+class HelperFragment : BaseFragment() {
     private var _bn: FragmentHelperPageBinding? = null
     private val bn get() = _bn!!
 

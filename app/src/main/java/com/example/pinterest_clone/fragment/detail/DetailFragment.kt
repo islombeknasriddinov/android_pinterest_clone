@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentHome.detail
+package com.example.pinterest_clone.fragment.detail
 
 import android.content.Context
 import android.graphics.Color
@@ -15,15 +15,14 @@ import com.bumptech.glide.Glide
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.MainAdapter
 import com.example.pinterest_clone.databinding.FragmentDetailBinding
-import com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Dialogs
-import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.DetailViewModel
 
 @Suppress("DEPRECATION")
-class DetailFragment : ParentHomeFragment() {
+class DetailFragment : BaseFragment() {
     private val TAG = DetailFragment::class.java.simpleName
     private var _bn: FragmentDetailBinding? = null
     private val bn get() = _bn!!

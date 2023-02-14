@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentSearch.result.profiles
+package com.example.pinterest_clone.fragment.result.profiles
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterest_clone.adapter.SearchProfilesAdapter
 import com.example.pinterest_clone.databinding.FragmentProfilesBinding
-import com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment
-import com.example.pinterest_clone.utils.Logger
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.viewmodel.ProfilesViewModel
 
-class ProfilesFragment : ParentSearchFragment() {
+class ProfilesFragment : BaseFragment() {
     private val TAG = ProfilesFragment::class.java.simpleName
 
     companion object {

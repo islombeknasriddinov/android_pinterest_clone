@@ -11,7 +11,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.example.pinterest_clone.fragment.parentHome.detail.DetailFragment
+import com.example.pinterest_clone.fragment.detail.DetailFragment
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 

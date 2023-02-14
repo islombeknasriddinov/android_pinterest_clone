@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.parentChat.update
+package com.example.pinterest_clone.fragment.update
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pinterest_clone.adapter.UpdatesAdapter
 import com.example.pinterest_clone.databinding.FragmentUpdateBinding
-import com.example.pinterest_clone.fragment.parentChat.ParentChatFragment
-import com.example.pinterest_clone.utils.Logger
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.viewmodel.UpdateViewModel
 
-class UpdateFragment : ParentChatFragment() {
+class UpdateFragment : BaseFragment() {
     private val TAG = UpdateFragment::class.java.simpleName
     private var _bn: FragmentUpdateBinding? = null
     private val bn get() = _bn!!

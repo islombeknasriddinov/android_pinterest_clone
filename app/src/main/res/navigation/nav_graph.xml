@@ -3,28 +3,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ParentHomeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/ParentHomeFragment"
-        android:name="com.example.pinterest_clone.fragment.parentHome.ParentHomeFragment"
-        tools:layout="@layout/fragment_parent_home"
-        android:label="HomeFragment" />
+        android:id="@+id/homeFragment"
+        android:name="com.example.pinterest_clone.fragment.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+
+    </fragment>
+
+    <action
+        android:id="@+id/action_homeFragment_to_detailFragment"
+        app:destination="@id/detailFragment"
+        app:enterAnim="@anim/from_right"
+        app:exitAnim="@anim/to_left"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
 
     <fragment
-        android:id="@+id/ParentSearchFragment"
-        android:name="com.example.pinterest_clone.fragment.parentSearch.ParentSearchFragment"
-        tools:layout="@layout/fragment_parent_search"
-        android:label="SearchFragment" />
+        android:id="@+id/detailFragment"
+        android:name="com.example.pinterest_clone.fragment.detail.DetailFragment"
+        android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
+
+        <action
+            android:id="@+id/action_detailFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <argument
+            android:name="photoHome"
+            app:argType="com.example.pinterest_clone.model.PhotoHomePage" />
+    </fragment>
 
     <fragment
-        android:id="@+id/ParentChatFragment"
-        tools:layout="@layout/fragment_parent_chat"
-        android:name="com.example.pinterest_clone.fragment.parentChat.ParentChatFragment"
-        android:label="ChatFragment" />
+        android:id="@+id/profileFragment"
+        android:name="com.example.pinterest_clone.fragment.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+
+    </fragment>
+
     <fragment
-        android:id="@+id/ParentProfileFragment"
-        tools:layout="@layout/fragment_parent_profile"
-        android:name="com.example.pinterest_clone.fragment.parentProfile.ParentProfileFragment"
-        android:label="ProfileFragment" />
+        android:id="@+id/searchFragment"
+        android:name="com.example.pinterest_clone.fragment.search.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultFragment"
+            app:destination="@id/searchResultFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.example.pinterest_clone.fragment.result.SearchResultFragment"
+        android:label="SearchResultFragment"
+        tools:layout="@layout/fragment_search_result">
+
+        <action
+            android:id="@+id/action_searchResultFragment_self"
+            app:destination="@id/searchResultFragment" />
+
+
+        <argument
+            android:name="text"
+            app:argType="string" />
+
+
+    </fragment>
+
+    <action
+        android:id="@+id/action_exploreFragment_to_detailFragment"
+        app:destination="@id/detailFragment"
+        app:enterAnim="@anim/from_right"
+        app:exitAnim="@anim/to_left"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
+
+    <fragment
+        android:id="@+id/exploreFragment"
+        android:name="com.example.pinterest_clone.fragment.result.explore.ExploreFragment"
+        android:label="ExploreFragment"
+        tools:layout="@layout/fragment_explore">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profilesFragment"
+        android:name="com.example.pinterest_clone.fragment.result.profiles.ProfilesFragment"
+        android:label="ExploreFragment"
+        tools:layout="@layout/fragment_profiles" />
+
+    <fragment
+        android:id="@+id/helperFragment"
+        android:name="com.example.pinterest_clone.fragment.helper.HelperFragment"
+        android:label="HelperFragment"
+        tools:layout="@layout/fragment_helper_page" />
+
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.pinterest_clone.fragment.update.UpdateFragment"
+        android:label="UpdateFragment"
+        tools:layout="@layout/fragment_update" />
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.pinterest_clone.fragment.chat.ChatFragment"
+        android:label="ChatFragment"
+        tools:layout="@layout/fragment_chat" />
+
 </navigation>

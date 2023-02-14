@@ -1,23 +1,21 @@
-package com.example.pinterest_clone.fragment.parentProfile.profile
+package com.example.pinterest_clone.fragment.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.ProfileAdapter
 import com.example.pinterest_clone.databinding.FragmentProfileBinding
-import com.example.pinterest_clone.fragment.parentProfile.ParentProfileFragment
+import com.example.pinterest_clone.fragment.BaseFragment
 import com.example.pinterest_clone.model.PhotoHomePage
-import com.example.pinterest_clone.model.Pin
 import com.example.pinterest_clone.utils.Logger
 import com.example.pinterest_clone.viewmodel.ProfileViewModel
 
-class ProfileFragment : ParentProfileFragment() {
+class ProfileFragment : BaseFragment() {
     private val TAG = ProfileFragment::class.java.simpleName
 
     private var _bn: FragmentProfileBinding? = null
