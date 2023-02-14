@@ -77,6 +77,7 @@ class DetailFragment : BaseFragment() {
         bn.bLike.setOnClickListener {
             if (isClicked) {
                 bn.bLike.setImageResource(R.drawable.ic_like)
+
                 isClicked = false
                 isLiked = true
             } else {

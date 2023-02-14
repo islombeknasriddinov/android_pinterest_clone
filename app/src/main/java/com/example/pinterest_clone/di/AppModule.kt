@@ -6,7 +6,7 @@ import com.example.pinterest_clone.db.PhotoHomeDao
 import com.example.pinterest_clone.network.Server.IS_TESTER
 import com.example.pinterest_clone.network.Server.getDevelopment
 import com.example.pinterest_clone.network.Server.getProduction
-import com.example.pinterest_clone.network.service.PhotoService
+import com.example.pinterest_clone.network.service.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ class AppModule {
      */
 
     @Provides
-    fun server():String{
+    fun server(): String {
         if (IS_TESTER) return getDevelopment()
         return getProduction()
     }
@@ -39,8 +39,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun photoService(): PhotoService{
-        return retrofitClient().create(PhotoService::class.java)
+    fun photoService(): ApiService {
+        return retrofitClient().create(ApiService::class.java)
     }
 
     /**
@@ -55,7 +55,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun dao(appDatabase: AppDatabase): PhotoHomeDao{
+    fun dao(appDatabase: AppDatabase): PhotoHomeDao {
         return appDatabase.getPhotoHomeDao()
     }
 

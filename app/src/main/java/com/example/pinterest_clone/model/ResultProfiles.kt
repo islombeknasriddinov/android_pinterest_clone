@@ -1,7 +1,5 @@
 package com.example.pinterest_clone.model
 
-import com.google.gson.annotations.SerializedName
-
 data class ResultProfiles(
     var total: Int? = null,
     var total_pages: Int? = null,

@@ -2,11 +2,11 @@ package com.example.pinterest_clone.repository
 
 import com.example.pinterest_clone.db.PhotoHomeDao
 import com.example.pinterest_clone.model.Pin
-import com.example.pinterest_clone.network.service.PhotoService
+import com.example.pinterest_clone.network.service.ApiService
 import javax.inject.Inject
 
-class PhotoHomeRepository @Inject constructor(
-    private val photoService: PhotoService,
+class MyRepository @Inject constructor(
+    private val apiService: ApiService,
     private val photoHomeDao: PhotoHomeDao
 ) {
 
@@ -14,16 +14,16 @@ class PhotoHomeRepository @Inject constructor(
      * Retrofit Related
      */
 
-    suspend fun apiPhotoHome(page: Int, perPage: Int) = photoService.getPhotos(page, perPage)
-    suspend fun apiPhotoRelated(id: String) = photoService.getRelatedPhotos(id)
+    suspend fun apiPhotoHome(page: Int, perPage: Int) = apiService.getPhotos(page, perPage)
+    suspend fun apiPhotoRelated(id: String) = apiService.getRelatedPhotos(id)
     suspend fun apiSearchResultPhotos(page: Int, query: String, perPage: Int) =
-        photoService.getSearchPhoto(page, query, perPage)
+        apiService.getSearchPhoto(page, query, perPage)
 
     suspend fun apiSearchProfilePhotos(page: Int, query: String, perPage: Int) =
-        photoService.getSearchProfile(page, query, perPage)
+        apiService.getSearchProfile(page, query, perPage)
 
-    suspend fun apiChatUpdatePhotos(page: Int, perPage: Int) = photoService.getTopics(page, perPage)
-    suspend fun apiGetUriForDownload(id: String) = photoService.getUrlForDownloadImage(id)
+    suspend fun apiChatUpdatePhotos(page: Int, perPage: Int) = apiService.getTopics(page, perPage)
+    suspend fun apiGetUriForDownload(id: String) = apiService.getUrlForDownloadImage(id)
 
     /**
      *Room db Related

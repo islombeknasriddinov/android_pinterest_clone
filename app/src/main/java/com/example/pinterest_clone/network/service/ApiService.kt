@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface PhotoService {
+interface ApiService {
 
     companion object {
         private const val ACCESS_KEY = "LEOaOtfFbCnYO9THs9tg7pqGgESlkr_Y-pPgT29LekI"

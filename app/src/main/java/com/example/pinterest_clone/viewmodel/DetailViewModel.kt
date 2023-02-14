@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pinterest_clone.model.PhotoHomePage
 import com.example.pinterest_clone.model.Pin
-import com.example.pinterest_clone.repository.PhotoHomeRepository
+import com.example.pinterest_clone.model.Uri
+import com.example.pinterest_clone.repository.MyRepository
+import com.example.pinterest_clone.utils.Logger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +16,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel @Inject constructor(private val photoHomeRepository: PhotoHomeRepository) :
+class DetailViewModel @Inject constructor(private val myRepository: MyRepository) :
     ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
@@ -25,11 +27,11 @@ class DetailViewModel @Inject constructor(private val photoHomeRepository: Photo
     fun apiRelatedPhoto(id: String) {
         isLoading.value = true
         CoroutineScope(Dispatchers.IO).launch {
-            var response = photoHomeRepository.apiPhotoRelated(id)
+            val response = myRepository.apiPhotoRelated(id)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     val photoList: ArrayList<PhotoHomePage>? = response.body()?.results
-                    relatedPhotoFromApi.postValue(photoList!!)
+                    relatedPhotoFromApi.postValue(photoList ?: ArrayList<PhotoHomePage>())
                     getUrlForDownloadImage(id)
                     isLoading.value = false
                 } else {
@@ -44,11 +46,11 @@ class DetailViewModel @Inject constructor(private val photoHomeRepository: Photo
 
     private fun getUrlForDownloadImage(id: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = photoHomeRepository.apiGetUriForDownload(id)
+            val response = myRepository.apiGetUriForDownload(id)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
-                    val res = response.body()
-                    val uri = res?.url
+                    val res: Uri? = response.body()
+                    val uri: String? = res?.url
                     uriFromApi.postValue(uri ?: "")
                 } else {
                     onError("onError : ${response.message()}")
@@ -68,7 +70,7 @@ class DetailViewModel @Inject constructor(private val photoHomeRepository: Photo
 
     fun insertPhotoHomeDB(pin: Pin) {
         viewModelScope.launch {
-            photoHomeRepository.insertPhotosToDB(pin)
+            myRepository.insertPhotosToDB(pin)
         }
 
     }

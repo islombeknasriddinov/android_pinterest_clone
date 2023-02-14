@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.activity
+package com.example.pinterest_clone
 
 import android.content.Context
 import android.os.Bundle

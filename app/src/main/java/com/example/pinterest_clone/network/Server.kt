@@ -8,6 +8,4 @@ object Server {
 
     external fun getDevelopment(): String
     external fun getProduction(): String
-    external fun getAccessKey(): String
-    external fun getClientId(): String
 }

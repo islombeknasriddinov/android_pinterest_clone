@@ -79,8 +79,13 @@ class ProfileFragment : BaseFragment() {
         open(R.id.action_profileFragment_to_detailFragment, args)
     }
 
-    override fun onDestroy() {
+    override fun onResume() {
+        super.onResume()
+        viewModel.getPhotoHomeFromDB()
+    }
+
+    override fun onDestroyView() {
         _bn = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }
