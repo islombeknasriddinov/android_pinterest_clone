@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/ParentHomeFragment"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/menu_ic_home"
         android:title="@string/str_home" />
 
     <item
-        android:id="@+id/ParentSearchFragment"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/menu_ic_search"
         android:title="@string/str_search" />
 
     <item
-        android:id="@+id/ParentChatFragment"
+        android:id="@+id/helperFragment"
         android:icon="@drawable/menu_ic_chat"
-        app:tint="@color/white"
-        android:title="@string/str_chat" />
+        android:title="@string/str_chat"
+        app:tint="@color/white" />
 
     <item
-        android:id="@+id/ParentProfileFragment"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/menu_ic_person"
         android:title="@string/str_profile" />
 </menu>

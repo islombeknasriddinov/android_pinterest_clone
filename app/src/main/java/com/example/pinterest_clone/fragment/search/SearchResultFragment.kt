@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.result
+package com.example.pinterest_clone.fragment.search
 
 import android.content.Context
 import android.os.Bundle
@@ -15,15 +15,16 @@ import com.example.pinterest_clone.R
 import com.example.pinterest_clone.adapter.PagerAdapter
 import com.example.pinterest_clone.adapter.SearchHistoryAdapter
 import com.example.pinterest_clone.databinding.FragmentSearchResultBinding
-import com.example.pinterest_clone.fragment.result.explore.ExploreFragment
-import com.example.pinterest_clone.fragment.result.profiles.ProfilesFragment
+import com.example.pinterest_clone.fragment.BaseFragment
+import com.example.pinterest_clone.fragment.search.explore.ExploreFragment
+import com.example.pinterest_clone.fragment.search.profiles.ProfilesFragment
 import com.example.pinterest_clone.manager.PrefsManager
 import com.example.pinterest_clone.model.SearchHistory
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 
-class SearchResultFragment : ParentSearchFragment() {
+class SearchResultFragment : BaseFragment() {
 
     private var _bn: FragmentSearchResultBinding? = null
     private val bn get() = _bn!!

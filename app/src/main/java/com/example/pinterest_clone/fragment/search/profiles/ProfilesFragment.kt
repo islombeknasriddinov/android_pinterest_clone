@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.result.profiles
+package com.example.pinterest_clone.fragment.search.profiles
 
 import android.os.Bundle
 import android.view.LayoutInflater

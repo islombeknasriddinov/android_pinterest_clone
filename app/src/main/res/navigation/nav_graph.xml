@@ -68,7 +68,7 @@
 
     <fragment
         android:id="@+id/searchResultFragment"
-        android:name="com.example.pinterest_clone.fragment.result.SearchResultFragment"
+        android:name="com.example.pinterest_clone.fragment.search.SearchResultFragment"
         android:label="SearchResultFragment"
         tools:layout="@layout/fragment_search_result">
 
@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/exploreFragment"
-        android:name="com.example.pinterest_clone.fragment.result.explore.ExploreFragment"
+        android:name="com.example.pinterest_clone.fragment.search.explore.ExploreFragment"
         android:label="ExploreFragment"
         tools:layout="@layout/fragment_explore">
 
@@ -102,25 +102,25 @@
 
     <fragment
         android:id="@+id/profilesFragment"
-        android:name="com.example.pinterest_clone.fragment.result.profiles.ProfilesFragment"
+        android:name="com.example.pinterest_clone.fragment.search.profiles.ProfilesFragment"
         android:label="ExploreFragment"
         tools:layout="@layout/fragment_profiles" />
 
     <fragment
         android:id="@+id/helperFragment"
-        android:name="com.example.pinterest_clone.fragment.helper.HelperFragment"
+        android:name="com.example.pinterest_clone.fragment.chat.HelperChatFragment"
         android:label="HelperFragment"
         tools:layout="@layout/fragment_helper_page" />
 
     <fragment
         android:id="@+id/updateFragment"
-        android:name="com.example.pinterest_clone.fragment.update.UpdateFragment"
+        android:name="com.example.pinterest_clone.fragment.chat.update.UpdateFragment"
         android:label="UpdateFragment"
         tools:layout="@layout/fragment_update" />
 
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.example.pinterest_clone.fragment.chat.ChatFragment"
+        android:name="com.example.pinterest_clone.fragment.chat.chat.ChatFragment"
         android:label="ChatFragment"
         tools:layout="@layout/fragment_chat" />
 

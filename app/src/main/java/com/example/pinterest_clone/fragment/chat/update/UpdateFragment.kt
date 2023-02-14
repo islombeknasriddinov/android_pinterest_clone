@@ -1,4 +1,4 @@
-package com.example.pinterest_clone.fragment.update
+package com.example.pinterest_clone.fragment.chat.update
 
 import android.os.Bundle
 import android.view.LayoutInflater
